@@ -15,4 +15,7 @@ cd /mnt/c/Users/User/Downloads/dmarc-visualizer-master
 # Pour faire tourner le container lancer la commande suivante
 sudo docker compose -f ./docker-compose.yml up -d
 
+# Pour l'arrêter
+sudo docker compose down
+
 # Résultats consultables localement au http://localhost:3000/
