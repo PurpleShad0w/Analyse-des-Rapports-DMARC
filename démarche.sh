@@ -11,8 +11,7 @@ cd ../..
 cd /mnt/c/Users/User/Downloads/dmarc-visualizer-master
 
 # Créer un dossier files et un dossier output_files contenant des résultats vides
-# Lancer le script saveDMARC.ps1 dans PowerShell avec la commande suivante
-.\saveDMARC.ps1
+
 
 # Pour faire tourner le container lancer la commande suivante
 sudo docker compose -f ./docker-compose.yml up -d
