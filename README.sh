@@ -1,22 +1,84 @@
-# Disclaimer - à long terme l'objectif est d'automatiser cette tâche, de la récupération des rapports à la production du dashboard
-# Ce document existe donc à titre informatif, pour faciliter la création des scripts et leur compréhension
+# This is a list of useful commands for the analysis
+# Since the endgoal is an automated ressource, those commands only serve for manual usage and debugging
 
-# Setup
+# SETUP
+# NOT ALL STEPS ARE NECESSARY, only those marked with ***
 
-# Besoin d'installer python3, pip et d'autres libraries (je ferai la liste lors de la prochaine instal, des versions spécifiques sont demandées)
-# Placer le dossier dmarc visualizer et se placer à l'intérieur
+# Enable Systemd
+sudo -e /etc/wsl.conf
 
-# Exemple avec la config actuelle - WSL2 Ubuntu 20.04 sous Windows 10
+# Add the following, save and exit
+[boot]
+systemd=true
+
+# Restart WSL2
+
+# Install Docker ***
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=arm64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt install docker-ce
+
+# Install Docker Compose ***
+mkdir -p ~/.docker/cli-plugins/
+curl -SL https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+chmod +x ~/.docker/cli-plugins/docker-compose
+sudo mkdir -p /usr/local/lib/docker/cli-plugins
+sudo mv ~/.docker/cli-plugins/docker-compose /usr/local/lib/docker/cli-plugins/docker-compose
+
+# Install Elastic Search
+curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+sudo apt update
+sudo apt install elasticsearch
+
+# Configure Elastic Search
+sudo nano /etc/elasticsearch/elasticsearch.yml
+
+# Uncomment and change this line, save and exit
+network.host: localhost
+
+# Start Elastic Search
+sudo systemctl start elasticsearch
+sudo systemctl enable elasticsearch
+
+# Navigate to subfolder ***
 cd ../..
 cd /mnt/c/Users/User/Downloads/dmarc-visualizer-master
 
-# Créer un dossier files et un dossier output_files contenant des résultats vides
+# Create necessary folders and copy templates ***
+mkdir dmarc-visualizer-master/files
+mkdir dmarc-visualizer-master/output_files
+sudo cp -a output_template/. dmarc-visualizer-master/output_files/
 
-
-# Pour faire tourner le container lancer la commande suivante
+# Run ***
 sudo docker compose -f ./docker-compose.yml up -d
 
-# Pour l'arrêter
+# Stop ***
 sudo docker compose down
 
-# Résultats consultables localement au http://localhost:3000/
+# Results at http://localhost:3000/
+
+
+# DEBUGGING
+
+# List active Docker containers
+sudo docker container ls
+
+# Remove all Docker containers
+sudo docker ps -qa | xargs -n1 sudo docker rm
+
+# Restart Elastic Search
+sudo service elasticsearch restart
+
+# Reinstall Elastic Search
+sudo apt-get remove --purge elasticsearch
+sudo apt-get install elasticsearch=7.10.1
+sudo systemctl start elasticsearch
+curl http://localhost:9200/
+
+# Reinstall WSL2 Ubuntu
+wsl --shutdown
+wsl --unregister Ubuntu
+wsl --install Ubuntu

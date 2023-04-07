@@ -6,8 +6,6 @@ os.chdir(os.path.dirname(sys.argv[0]))
 from datetime import datetime
 from email import policy
 from email.parser import BytesParser
-import gzip
-import shutil
 
 default_path = "home/shared/DMARC/altair.ac6.fr/rua/"
 save_path = "dmarc-visualizer-master/files/"
@@ -30,8 +28,3 @@ for email in emails:
 
         with open(save_path + name, 'wb') as f:
             f.write(data)
-
-zip_files = os.listdir(save_path)
-
-for zip_file in zip_files:
-    print(" ")
