@@ -1,0 +1,3 @@
+-- Init
+
+CREATE DATABASE dmarc

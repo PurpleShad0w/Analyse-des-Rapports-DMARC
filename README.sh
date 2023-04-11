@@ -66,8 +66,14 @@ sudo docker compose down
 # List active Docker containers
 sudo docker container ls
 
+# Shutdown one Docker container
+sudo docker container stop <ID>
+
 # Remove all Docker containers
 sudo docker ps -qa | xargs -n1 sudo docker rm
+
+# Restart Docker
+sudo systemctl restart docker
 
 # Restart Elastic Search
 sudo service elasticsearch restart
