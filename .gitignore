@@ -1,5 +1,9 @@
-# Données appartenant à Ac6
+# Sensitive Data
 
 files
 output_files
 home
+
+# Cache
+
+__pycache__
