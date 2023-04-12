@@ -1,8 +1,5 @@
 import os
 import sys
-
-os.chdir(os.path.dirname(sys.argv[0]))
-
 from datetime import datetime
 from email import policy
 from email.parser import BytesParser
@@ -11,6 +8,10 @@ import lzma
 import gzip
 import xml.etree.ElementTree as ET
 import socket
+from geolite2 import geolite2
+import tldextract
+
+os.chdir(os.path.dirname(sys.argv[0]))
 
 default_path = "home/shared/DMARC/altair.ac6.fr/rua/"
 save_path = "dmarc-visualizer-master/files/"
@@ -18,42 +19,47 @@ report_path = "dmarc-reports/"
 year = datetime.now().year
 month = datetime.now().month
 decompressor = BZ2Decompressor()
-report_data_template = {
-    "xml_schema":'',
+reader = geolite2.reader()
+
+report_data_template_meta = {
+#    "xml_schema":'',
     "org_name":'./report_metadata/org_name',
     "org_email":'./report_metadata/email',
-    "org_extra_contact_info":'',
+    "org_extra_contact_info":'./report_metadata/extra_contact_info',
     "report_id":'./report_metadata/report_id',
     "begin_date":'./report_metadata/date_range/begin',
     "end_date":'./report_metadata/date_range/end',
-    "errors":'',
+#    "errors":'',
     "domain":'./policy_published/domain',
     "adkim":'./policy_published/adkim',
     "aspf":'./policy_published/aspf',
     "p":'./policy_published/p',
     "sp":'./policy_published/sp',
     "pct":'./policy_published/pct',
-    "fo":'./policy_published/fo',
-    "source_ip_address":'./record/row/source_ip',
+    "fo":'./policy_published/fo'
+}
+
+report_data_template_record = {
+    "source_ip_address":'row/source_ip',
     "source_country":'',
     "source_reverse_dns":'',
     "source_base_domain":'',
-    "count":'./record/row/count',
-    "spf_aligned":'./record/row/policy_evaluated/spf',
-    "dkim_aligned":'./record/row/policy_evaluated/dkim',
-    "dmarc_aligned":'./record/row/policy_evaluated/dmarc',
-    "disposition":'./record/row/policy_evaluated/disposition',
-    "policy_override_reasons":'',
-    "policy_override_comments":'',
-    "envelope_from":'',
-    "header_from":'./record/identifiers/header_from',
-    "envelope_to":'',
-    "dkim_domains":'./record/auth_results/dkim/domain',
-    "dkim_selectors":'./record/auth_results/dkim/selector',
-    "dkim_results":'./record/auth_results/dkim/result',
-    "spf_domains":'./record/auth_results/spf/domain',
-    "spf_scopes":'',
-    "spf_results":'./record/auth_results/spf/result',
+    "count":'row/count',
+    "spf_aligned":'row/policy_evaluated/spf',
+    "dkim_aligned":'row/policy_evaluated/dkim',
+    "dmarc_aligned":'row/policy_evaluated/dmarc',
+    "disposition":'row/policy_evaluated/disposition',
+#    "policy_override_reasons":'',
+#    "policy_override_comments":'',
+    "envelope_from":'identifiers/envelope_from',
+    "header_from":'identifiers/header_from',
+    "envelope_to":'identifiers/envelope_to',
+    "dkim_domain":'auth_results/dkim/domain',
+    "dkim_selector":'auth_results/dkim/selector',
+    "dkim_result":'auth_results/dkim/result',
+    "spf_domain":'auth_results/spf/domain',
+    "spf_scope":'auth_results/spf/scope',
+    "spf_result":'auth_results/spf/result',
 }
 
 if len(str(month)) == 1:
@@ -106,19 +112,55 @@ for report in reports:
     unzip(report, save_path, report_path, overwrite=False)
 
 reports = os.listdir(report_path)
+reports_data = []
 
 for report in reports:
     tree = ET.parse(report_path + report)
     root = tree.getroot()
-    report_data = report_data_template.copy()
-    date = root.find('./report_metadata/date_range/begin').text
-    print(datetime.utcfromtimestamp(float(date)))
-    print(socket.gethostbyaddr('37.59.46.135'))
+    report_data_meta = report_data_template_meta.copy()
 
-    for key, value in report_data.items():
-        try:
-            test = root.find(value)
-            print(key, test.text)
-        except:
-            print(key)
+    for key, value in report_data_template_meta.items():
+        if key == 'begin_date' or key == 'end_date':
+            date = root.find(value).text
+            info = datetime.utcfromtimestamp(float(date))
+            info = info.strftime('%Y-%m-%d %H:%M:%S')
+            report_data_meta[key] = info
             continue
+
+        try:
+            info = root.find(value)
+            report_data_meta[key] = info.text
+        except AttributeError:
+            if key == 'fo':
+                report_data_meta[key] = '0'
+                continue
+
+            report_data_meta[key] = ''
+            continue
+    
+    report_number = len(root.findall('record'))
+
+    for report_n in range(report_number):
+        report_data_record = report_data_template_record.copy()
+
+        for key, value in report_data_template_record.items():
+            value = './record[' + str(report_n+1) + ']/' + value
+
+            try:
+                info = root.find(value)
+                report_data_record[key] = info.text
+            except AttributeError:
+                report_data_record[key] = ''
+                continue
+        
+        ip_adress = root.find('./record/row/source_ip').text
+        country = reader.get(ip_adress)['country']['iso_code']
+        domain = socket.gethostbyaddr(ip_adress)[0]
+        base_domain = tldextract.extract(domain).registered_domain
+        report_data_record['source_country'] = country
+        report_data_record['source_reverse_dns'] = domain
+        report_data_record['source_base_domain'] = base_domain
+    
+        reports_data.append(report_data_meta | report_data_record)
+
+print(reports_data)
