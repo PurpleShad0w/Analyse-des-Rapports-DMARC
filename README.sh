@@ -61,6 +61,14 @@ sudo docker compose down
 # Results at http://localhost:3000/
 
 
+# SQL
+
+# Navigate to binaries directory
+cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+# Connect to 'dmarc' database using root user
+mysql -u root -p dmarc
+
 # DEBUGGING
 
 # List active Docker containers

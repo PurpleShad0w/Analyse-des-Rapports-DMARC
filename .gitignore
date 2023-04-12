@@ -4,6 +4,8 @@ files
 output_files
 home
 dmarc-reports
+user.txt
+root.txt
 
 # Cache
 

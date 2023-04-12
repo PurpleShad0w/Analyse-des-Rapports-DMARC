@@ -1,3 +1,37 @@
--- Init
+CREATE DATABASE dmarc;
 
-CREATE DATABASE dmarc
+USE dmarc
+CREATE TABLE rua (
+    record_id int,
+    org_name varchar(100),
+    org_email varchar(100),
+    org_extra_contact_info varchar(100),
+    report_id int,
+    begin_date varchar(100),
+    end_date varchar(100),
+    domain varchar(100),
+    adkim varchar(100),
+    aspf varchar(100),
+    p varchar(100),
+    sp varchar(100),
+    pct int,
+    fo int,
+    source_ip_address varchar(100),
+    source_country varchar(100),
+    source_reverse_dns varchar(100),
+    source_base_domain varchar(100),
+    count int,
+    spf_aligned varchar(100),
+    dkim_aligned varchar(100),
+    dmarc_aligned varchar(100),
+    disposition varchar(100),
+    envelope_from varchar(100),
+    header_from varchar(100),
+    envelope_to varchar(100),
+    dkim_domain varchar(100),
+    dkim_selector varchar(100),
+    dkim_result varchar(100),
+    spf_domain varchar(100),
+    spf_scope varchar(100),
+    spf_result varchar(100)
+);

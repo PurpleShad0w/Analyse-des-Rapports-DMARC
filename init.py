@@ -10,8 +10,20 @@ import xml.etree.ElementTree as ET
 import socket
 from geolite2 import geolite2
 import tldextract
+import mysql.connector
 
 os.chdir(os.path.dirname(sys.argv[0]))
+
+with open('user.txt', 'r') as file:
+    user, pwd = file.read().split('\n')
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user=user,
+  password=pwd
+)
+
+mycursor = mydb.cursor()
 
 default_path = "home/shared/DMARC/altair.ac6.fr/rua/"
 save_path = "dmarc-visualizer-master/files/"
@@ -20,6 +32,11 @@ year = datetime.now().year
 month = datetime.now().month
 decompressor = BZ2Decompressor()
 reader = geolite2.reader()
+
+if len(str(month)) == 1:
+    month = "0" + str(month)
+
+path = default_path + str(year) + "/" + str(month) + "/"
 
 report_data_template_meta = {
 #    "xml_schema":'',
@@ -61,11 +78,6 @@ report_data_template_record = {
     "spf_scope":'auth_results/spf/scope',
     "spf_result":'auth_results/spf/result',
 }
-
-if len(str(month)) == 1:
-    month = "0" + str(month)
-
-path = default_path + str(year) + "/" + str(month) + "/"
 
 emails = os.listdir(path)
 
@@ -163,4 +175,13 @@ for report in reports:
     
         reports_data.append(report_data_meta | report_data_record)
 
-print(reports_data)
+with open('queries.sql', 'r') as file:
+    sqlFile = file.read()
+
+sqlCommands = sqlFile.split(';')
+
+for command in sqlCommands:
+    try:
+        mycursor.execute(command)
+    except mysql.connector.Error as error:
+        print(error)
