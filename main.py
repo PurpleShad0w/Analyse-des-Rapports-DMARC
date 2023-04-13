@@ -11,18 +11,14 @@ import socket
 from geolite2 import geolite2
 import tldextract
 import mysql.connector
+import pandas as pd
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
 with open('user.txt', 'r') as file:
     user, pwd = file.read().split('\n')
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user=user,
-  password=pwd
-)
-
+mydb = mysql.connector.connect(host="localhost", user=user, password=pwd)
 mycursor = mydb.cursor()
 
 default_path = "home/shared/DMARC/altair.ac6.fr/rua/"
@@ -175,6 +171,13 @@ for report in reports:
     
         reports_data.append(report_data_meta | report_data_record)
 
+data, id = [], 1
+for report in reports_data:
+    entry = list(report.values())
+    entry.insert(0, id)
+    id += 1
+    data.append(tuple(entry))
+
 with open('queries.sql', 'r') as file:
     sqlFile = file.read()
 
@@ -182,6 +185,74 @@ sqlCommands = sqlFile.split(';')
 
 for command in sqlCommands:
     try:
+        if command.startswith('\nINSERT'):
+            mycursor.executemany(command, data)
+            mydb.commit()
+            continue
+
         mycursor.execute(command)
+
+        if command == '\nCREATE DATABASE DMARC':
+            mydb.close()
+            mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='DMARC')
+            mycursor = mydb.cursor()
+
+        if command == '\nSELECT * FROM RUA':
+            break
+
     except mysql.connector.Error as error:
         print(error)
+
+header = [row[0] for row in mycursor.description]
+rows = mycursor.fetchall()
+
+with open('dmarc-db/database.csv', 'w') as f:
+    f.write(','.join(header) + '\n')
+    for row in rows:
+        f.write(','.join(str(r) for r in row) + '\n')
+
+database = pd.read_csv('dmarc-db/database.csv')
+
+for index, row in database.iterrows():
+
+    print(index, row)
+
+    feedback = ET.Element('feedback')
+    report_metadata = ET.SubElement(feedback, 'report_metadata')
+    org_name = ET.SubElement(report_metadata, 'org_name')
+    org_name.text = ''
+    email = ET.SubElement(report_metadata, 'email')
+    extra_contact_info = ET.SubElement(report_metadata, 'extra_contact_info')
+    report_id = ET.SubElement(report_metadata, 'report_id')
+    date_range = ET.SubElement(report_metadata, 'date_range')
+    begin = ET.SubElement(date_range, 'begin')
+    end = ET.SubElement(date_range, 'end')
+    policy_published = ET.SubElement(feedback, 'policy_published')
+    domain = ET.SubElement(policy_published, 'domain')
+    adkim = ET.SubElement(policy_published, 'adkim')
+    aspf = ET.SubElement(policy_published, 'aspf')
+    p = ET.SubElement(policy_published, 'p')
+    pct = ET.SubElement(policy_published, 'pct')
+    fo = ET.SubElement(policy_published, 'fo')
+    record = ET.SubElement(feedback, 'record')
+    row = ET.SubElement(record, 'row')
+    source_ip = ET.SubElement(row, 'source_ip')
+    count = ET.SubElement(row, 'count')
+    policy_evaluated = ET.SubElement(row, 'policy_evaluated')
+    disposition = ET.SubElement(policy_evaluated, 'disposition')
+    dkim = ET.SubElement(policy_evaluated, 'dkim')
+    spf = ET.SubElement(policy_evaluated, 'spf')
+    dmarc = ET.SubElement(policy_evaluated, 'dmarc')
+    identifiers = ET.SubElement(record, 'identifiers')
+    header_from = ET.SubElement(identifiers, 'header_from')
+    envelope_from = ET.SubElement(identifiers, 'envelope_from')
+    envelope_to = ET.SubElement(identifiers, 'envelope_to')
+    auth_results = ET.SubElement(record, 'auth_results')
+    dkim0 = ET.SubElement(auth_results, 'dkim')
+    domain0 = ET.SubElement(dkim0, 'domain')
+    selector = ET.SubElement(dkim0, 'selector')
+    result = ET.SubElement(dkim0, 'result')
+    spf0 = ET.SubElement(auth_results, 'spf')
+    domain1 = ET.SubElement(spf0, 'domain')
+    scope = ET.SubElement(spf0, 'scope')
+    result0 = ET.SubElement(spf0, 'result')

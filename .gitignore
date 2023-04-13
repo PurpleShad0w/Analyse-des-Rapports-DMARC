@@ -4,6 +4,7 @@ files
 output_files
 home
 dmarc-reports
+dmarc-db
 user.txt
 root.txt
 
