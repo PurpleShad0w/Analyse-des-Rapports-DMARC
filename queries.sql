@@ -24,6 +24,8 @@ CREATE TABLE RUA (
     dkim_aligned VARCHAR(255),
     dmarc_aligned VARCHAR(255),
     disposition VARCHAR(255),
+    policy_override_reasons VARCHAR(255),
+    policy_override_comments VARCHAR(255),
     envelope_from VARCHAR(255),
     header_from VARCHAR(255),
     envelope_to VARCHAR(255),
@@ -37,7 +39,7 @@ CREATE TABLE RUA (
 );
 INSERT INTO RUA (record_id, org_name, org_email, org_extra_contact_info, report_id, begin_date, end_date,
     domain, adkim, aspf, p, sp, pct, fo, source_ip_address, source_country, source_reverse_dns, source_base_domain,
-    count, spf_aligned, dkim_aligned, dmarc_aligned, disposition, envelope_from, header_from, envelope_to, dkim_domain,
-    dkim_selector, dkim_result, spf_domain, spf_scope, spf_result) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+    count, spf_aligned, dkim_aligned, dmarc_aligned, disposition, policy_override_reasons, policy_override_comments,
+    envelope_from, header_from, envelope_to, dkim_domain, dkim_selector, dkim_result, spf_domain, spf_scope,
+    spf_result) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 SELECT * FROM RUA;
