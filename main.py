@@ -167,9 +167,13 @@ for report in reports:
         report_data_record['source_reverse_dns'] = domain
         report_data_record['source_base_domain'] = base_domain
         if report_data_record['spf_aligned'] == 'pass':
-            report_data_record['spf_aligned'] = True 
+            report_data_record['spf_aligned'] = True
+        else:
+            report_data_record['spf_aligned'] = False
         if report_data_record['dkim_aligned'] == 'pass':
             report_data_record['dkim_aligned'] = True
+        else:
+            report_data_record['dkim_aligned'] = False
         report_data_record['dmarc_aligned'] = report_data_record['spf_aligned'] or report_data_record['dkim_aligned']
         if report_data_record['dkim_selector'] == '':
             report_data_record['dkim_selector'] = 'none'
