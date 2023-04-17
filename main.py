@@ -161,8 +161,12 @@ for report in reports:
         
         ip_adress = root.find('./record/row/source_ip').text
         country = reader.get(ip_adress)['country']['iso_code']
-        domain = socket.gethostbyaddr(ip_adress)[0]
-        base_domain = tldextract.extract(domain).registered_domain
+        try:
+            domain = socket.gethostbyaddr(ip_adress)[0]
+            base_domain = tldextract.extract(domain).registered_domain
+        except socket.herror:
+            domain = ''
+            base_domain = ''
         report_data_record['source_country'] = country
         report_data_record['source_reverse_dns'] = domain
         report_data_record['source_base_domain'] = base_domain
