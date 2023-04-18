@@ -69,6 +69,11 @@ cd C:\Program Files\MySQL\MySQL Server 8.0\bin
 # Connect to 'dmarc' database using root user
 mysql -u root -p dmarc
 
+# GRAFANA
+
+# Generate Dashboard
+generate-dashboard -o dmarc.json dmarc.dashboard.py
+
 # DEBUGGING
 
 # List active Docker containers
