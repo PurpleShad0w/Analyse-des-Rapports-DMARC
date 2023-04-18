@@ -22,8 +22,8 @@ mydb = mysql.connector.connect(host="localhost", user=user, password=pwd)
 mycursor = mydb.cursor()
 
 default_path = "home/shared/DMARC/altair.ac6.fr/rua/"
-save_path = "dmarc-visualizer-master/files/"
-report_path = "dmarc-reports/"
+save_path = "dmarc-reports/files/"
+report_path = "dmarc-reports/xml/"
 year = datetime.now().year
 month = datetime.now().month
 decompressor = BZ2Decompressor()
