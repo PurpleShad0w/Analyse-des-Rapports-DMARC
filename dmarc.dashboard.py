@@ -8,7 +8,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-with open('data/Grafana-DMARC_Reports.json', 'r', encoding='utf-8') as f:
+with open('report.json', 'r', encoding='utf-8') as f:
     template = json.loads(f.read())
     use_template = True
 
