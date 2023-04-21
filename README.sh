@@ -59,6 +59,8 @@ sudo docker compose -f ./docker-compose.yml up -d
 sudo docker compose down
 
 # Results at http://localhost:3000/
+# Current Snapshot at https://snapshots.raintank.io/dashboard/snapshot/mDGImXGqTzd3O5yGKZxBJnf7hFSdJdDn
+
 
 
 # SQL
@@ -69,10 +71,16 @@ cd C:\Program Files\MySQL\MySQL Server 8.0\bin
 # Connect to 'dmarc' database using root user
 mysql -u root -p dmarc
 
+
+
 # GRAFANA
 
 # Generate Dashboard
 generate-dashboard -o dmarc.json dmarc.dashboard.py
+
+# Install Pie Chart Panel
+grafana-cli plugins install grafana-piechart-panel
+
 
 # DEBUGGING
 

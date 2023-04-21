@@ -56,20 +56,26 @@
       "type": "row"
     },
     {
-      "aliasColors": {
-        "false": "#E0B400",
-        "true": "#37872D"
-      },
-      "breakPoint": "50%",
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
-      "fontSize": "120%",
-      "format": "none",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 9,
         "w": 8,
@@ -77,309 +83,27 @@
         "y": 1
       },
       "id": 6,
-      "legend": {
-        "percentage": false,
-        "show": true,
-        "values": false
-      },
-      "legendType": "Right side",
       "links": [],
       "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "donut",
-      "strokeWidth": "4",
-      "targets": [
-        {
-          "alias": "",
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:243",
-              "fake": true,
-              "field": "spf_aligned",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:244",
-              "field": "date_range",
-              "id": "2",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "uid": "$datasourceag"
-          },
-          "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:241",
-              "field": "message_count",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
-          "refId": "A",
-          "timeField": "date_range"
-        }
-      ],
-      "title": "SPF Alignment",
-      "transparent": true,
-      "type": "grafana-piechart-panel",
-      "valueName": "total"
-    },
-    {
-      "aliasColors": {
-        "false": "#E0B400",
-        "true": "#37872D"
-      },
-      "breakPoint": "50%",
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "datasource": {
-        "uid": "$datasourceag"
-      },
-      "fontSize": "120%",
-      "format": "none",
-      "gridPos": {
-        "h": 9,
-        "w": 8,
-        "x": 8,
-        "y": 1
-      },
-      "id": 2,
-      "legend": {
-        "percentage": false,
-        "show": true,
-        "values": false
-      },
-      "legendType": "Right side",
-      "links": [],
-      "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "donut",
-      "strokeWidth": "4",
-      "targets": [
-        {
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "dkim_aligned",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "date_range",
-              "id": "2",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "uid": "$datasourceag"
-          },
-          "hide": false,
-          "metrics": [
-            {
-              "field": "message_count",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
-          "refId": "A",
-          "timeField": "date_range"
-        }
-      ],
-      "title": "DKIM Alignment",
-      "transparent": true,
-      "type": "grafana-piechart-panel",
-      "valueName": "total"
-    },
-    {
-      "aliasColors": {
-        "false": "#C4162A",
-        "true": "#37872D"
-      },
-      "breakPoint": "50%",
-      "combine": {
-        "label": "Others",
-        "threshold": 0
-      },
-      "datasource": {
-        "uid": "$datasourceag"
-      },
-      "description": "",
-      "fontSize": "120%",
-      "format": "none",
-      "gridPos": {
-        "h": 9,
-        "w": 8,
-        "x": 16,
-        "y": 1
-      },
-      "id": 5,
-      "legend": {
-        "header": "",
-        "percentage": false,
-        "show": true,
-        "values": false
-      },
-      "legendType": "Right side",
-      "links": [],
-      "maxDataPoints": 3,
-      "nullPointMode": "connected",
-      "pieType": "donut",
-      "strokeWidth": "4",
-      "targets": [
-        {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:385",
-              "fake": true,
-              "field": "passed_dmarc",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:386",
-              "field": "date_range",
-              "id": "2",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "uid": "$datasourceag"
-          },
-          "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:383",
-              "field": "message_count",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
-          "refId": "A",
-          "timeField": "date_range"
-        }
-      ],
-      "title": "DMARC Passage",
-      "transparent": true,
-      "type": "grafana-piechart-panel",
-      "valueName": "total"
-    },
-    {
-      "aliasColors": {
-        "Pass": "dark-green",
-        "fail": "dark-red",
-        "false": "dark-yellow",
-        "neutral": "super-light-blue",
-        "none": "dark-yellow",
-        "pass": "dark-green",
-        "permerror": "dark-orange",
-        "softfail": "super-light-green",
-        "temperror": "semi-dark-yellow",
-        "true": "dark-green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": {
-        "type": "mysql",
-        "uid": "LwPYaoEVk"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "links": [
-            {
-              "title": "",
-              "url": ""
-            }
-          ]
-        },
-        "overrides": []
-      },
-      "fill": 2,
-      "fillGradient": 6,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 10
-      },
-      "hiddenSeries": false,
-      "id": 33,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "9.4.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
           "dataset": "dmarc",
@@ -390,10 +114,33 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "",
+          "rawSql": "SELECT SUM(spf_aligned_w) AS \"True\", SUM(spf_unaligned) AS \"False\" FROM dmarc.rua LIMIT 50 ",
           "refId": "A",
           "sql": {
-            "columns": [],
+            "columns": [
+              {
+                "alias": "\"True\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "spf_aligned_w",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"False\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "spf_unaligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
             "groupBy": [
               {
                 "property": {
@@ -407,693 +154,1517 @@
           "table": "rua"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
-      "title": "SPF Results Over Time",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:216",
-          "format": "none",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:217",
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "title": "SPF Alignment",
+      "transparent": true,
+      "type": "piechart"
     },
     {
-      "aliasColors": {
-        "Pass": "dark-green",
-        "fail": "dark-red",
-        "false": "dark-yellow",
-        "neutral": "super-light-blue",
-        "none": "dark-yellow",
-        "pass": "dark-green",
-        "permerror": "dark-orange",
-        "temperror": "semi-dark-yellow",
-        "true": "dark-green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
         },
         "overrides": []
       },
-      "fill": 2,
-      "fillGradient": 6,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 1
+      },
+      "id": 2,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "dmarc",
+          "datasource": {
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT SUM(dkim_aligned_w) AS \"True\", SUM(dkim_unaligned) AS \"False\" FROM dmarc.rua LIMIT 50 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"True\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dkim_aligned_w",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"False\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dkim_unaligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
+        }
+      ],
+      "title": "DKIM Alignment",
+      "transparent": true,
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 5,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "dataset": "dmarc",
+          "datasource": {
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT SUM(dmarc_aligned_w) AS \"True\", SUM(dmarc_unaligned) AS \"False\" FROM dmarc.rua LIMIT 50 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"True\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dmarc_aligned_w",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"False\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dmarc_unaligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
+        }
+      ],
+      "title": "DMARC Passage",
+      "transparent": true,
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [
+            {
+              "title": "",
+              "url": ""
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Pass"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fail"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "false"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "neutral"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "none"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pass"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "permerror"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "softfail"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temperror"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "true"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "id": 33,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "dataset": "dmarc",
+          "datasource": {
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT time, SUM(spf_pass) AS \"Pass\", SUM(spf_fail) AS \"Fail\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Pass\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "spf_pass",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Fail\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "spf_fail",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "time",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
+        }
+      ],
+      "title": "SPF Results Over Time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Pass"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fail"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "false"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "neutral"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "none"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "pass"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "permerror"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temperror"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "true"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
         "y": 10
       },
-      "hiddenSeries": false,
       "id": 19,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
-      "percentage": false,
       "pluginVersion": "9.4.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "dkim_results.result.keyword",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "date_range",
-              "id": "2",
-              "settings": {
-                "interval": "1d",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "field": "message_count",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT time, SUM(dkim_pass) AS \"Pass\", SUM(dkim_fail) AS \"Fail\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Pass\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dkim_pass",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Fail\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dkim_fail",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "time",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "DKIM Results Over Time",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "none",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {
-        "false": "dark-yellow",
-        "true": "dark-green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "false"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "true"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fill": 2,
-      "fillGradient": 6,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
         "y": 19
       },
-      "hiddenSeries": false,
       "id": 18,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
-      "percentage": false,
       "pluginVersion": "9.4.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "spf_aligned",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "date_range",
-              "id": "2",
-              "settings": {
-                "interval": "1d",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "field": "message_count",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT SUM(spf_aligned) AS \"True\", time, SUM(spf_unaligned) AS \"False\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"True\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "spf_aligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"False\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "spf_unaligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "time",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "SPF Alignment Over Time",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "none",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {
-        "false": "dark-yellow",
-        "true": "dark-green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "false"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "true"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fill": 2,
-      "fillGradient": 6,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
         "y": 19
       },
-      "hiddenSeries": false,
       "id": 34,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
-      "percentage": false,
       "pluginVersion": "9.4.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "dkim_aligned",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "date_range",
-              "id": "2",
-              "settings": {
-                "interval": "1d",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "field": "message_count",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT SUM(dkim_aligned) AS \"True\", time, SUM(dkim_unaligned) AS \"False\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"True\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dkim_aligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"False\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dkim_unaligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "time",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "DKIM Alignment Over Time",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "none",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {
-        "false": "dark-red",
-        "true": "dark-green"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "false"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "true"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fill": 2,
-      "fillGradient": 6,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 0,
         "y": 28
       },
-      "hiddenSeries": false,
       "id": 7,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
-      "percentage": false,
       "pluginVersion": "9.4.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "passed_dmarc",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "date_range",
-              "id": "2",
-              "settings": {
-                "interval": "1d",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "field": "message_count",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT SUM(dmarc_aligned) AS \"True\", time, SUM(dkim_unaligned) AS \"False\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"True\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dmarc_aligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"False\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dkim_unaligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "time",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "DMARC Passage Over Time",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "none",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
-      "aliasColors": {
-        "none": "dark-green",
-        "quarantine": "semi-dark-orange",
-        "reject": "red"
-      },
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 60,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "none"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "quarantine"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "reject"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
-      "fill": 2,
-      "fillGradient": 6,
       "gridPos": {
         "h": 9,
         "w": 12,
         "x": 12,
         "y": 28
       },
-      "hiddenSeries": false,
       "id": 8,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
       "pluginVersion": "9.4.7",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "fake": true,
-              "field": "disposition.keyword",
-              "id": "3",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "field": "date_range",
-              "id": "2",
-              "settings": {
-                "interval": "1d",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "time_series",
           "hide": false,
-          "metrics": [
-            {
-              "field": "message_count",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT time, SUM(dispo_none) AS \"None\", SUM(dispo_quarantine) AS \"Quarantine\", SUM(dispo_reject) AS \"Reject\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "parameters": [
+                  {
+                    "name": "time",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"None\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dispo_none",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Quarantine\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dispo_quarantine",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Reject\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "dispo_reject",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "time",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
       "title": "Message Disposition Over Time",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -1312,20 +1883,12 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_reverse_dns, source_base_domain, SUM(count) FROM dmarc.rua GROUP BY source_reverse_dns, source_base_domain ORDER BY SUM(count) DESC LIMIT 2000 ",
+          "rawSql": "SELECT source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY source_base_domain ORDER BY SUM(count) DESC LIMIT 2000 ",
           "refId": "A",
           "sql": {
             "columns": [
               {
-                "parameters": [
-                  {
-                    "name": "source_reverse_dns",
-                    "type": "functionParameter"
-                  }
-                ],
-                "type": "function"
-              },
-              {
+                "alias": "\"Reverse DNS Base\"",
                 "parameters": [
                   {
                     "name": "source_base_domain",
@@ -1335,6 +1898,7 @@
                 "type": "function"
               },
               {
+                "alias": "\"Messages\"",
                 "name": "SUM",
                 "parameters": [
                   {
@@ -1346,13 +1910,6 @@
               }
             ],
             "groupBy": [
-              {
-                "property": {
-                  "name": "source_reverse_dns",
-                  "type": "string"
-                },
-                "type": "groupBy"
-              },
               {
                 "property": {
                   "name": "source_base_domain",
@@ -1392,7 +1949,8 @@
     },
     {
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -1493,86 +2051,76 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:291",
-              "fake": true,
-              "field": "org_name.keyword",
-              "id": "7",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:98",
-              "fake": true,
-              "field": "org_extra_contact_info.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:96",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT org_name AS \"Reporting Organisation\", org_extra_contact_info AS \"Org Contact Info\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY org_name, org_extra_contact_info ORDER BY SUM(count) DESC ",
           "refId": "A",
-          "timeField": "date_range"
-        },
-        {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:102",
-              "fake": true,
-              "field": "org_extra_contact_info.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Reporting Organisation\"",
+                "parameters": [
+                  {
+                    "name": "org_name",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
               },
-              "type": "terms"
-            }
-          ],
-          "datasource": {
-            "uid": "$datasourceag"
+              {
+                "alias": "\"Org Contact Info\"",
+                "parameters": [
+                  {
+                    "name": "org_extra_contact_info",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "count",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "org_name",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "org_extra_contact_info",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "SUM(count)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
           },
-          "hide": true,
-          "metrics": [
-            {
-              "$$hashKey": "object:100",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
-          "refId": "B",
-          "timeField": "date_range"
+          "table": "rua"
         }
       ],
       "title": "Reporting Organisations",
@@ -1594,7 +2142,8 @@
     },
     {
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -1622,24 +2171,6 @@
           }
         },
         "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Header From"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Open ${__data.fields[\"header_from.keyword\"]} in new window",
-                    "url": "https://${__data.fields[\"header_from.keyword\"]}"
-                  }
-                ]
-              }
-            ]
-          },
           {
             "matcher": {
               "id": "byName",
@@ -1701,39 +2232,59 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:388",
-              "fake": true,
-              "field": "header_from.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "none",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:386",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT header_from AS \"Header From\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY header_from ORDER BY SUM(count) DESC ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Header From\"",
+                "parameters": [
+                  {
+                    "name": "header_from",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "count",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "header_from",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "SUM(count)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
+          },
+          "table": "rua"
         }
       ],
       "title": "Message Volume by Header From",
@@ -1753,99 +2304,198 @@
       "type": "table"
     },
     {
-      "circleMaxSize": 30,
-      "circleMinSize": 2,
-      "colors": [
-        "#37872D",
-        "#FA6400",
-        "#C4162A"
-      ],
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
-      "decimals": 0,
-      "esMetric": "Count",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 10,
         "w": 16,
         "x": 0,
         "y": 52
       },
-      "hideEmpty": true,
-      "hideZero": true,
       "id": 12,
-      "initialZoom": "1",
       "links": [],
-      "locationData": "countries",
-      "mapCenter": "(0°, 0°)",
-      "mapCenterLatitude": 0,
-      "mapCenterLongitude": 0,
       "maxDataPoints": 1,
-      "mouseWheelZoom": true,
-      "showLegend": true,
-      "stickyLabels": true,
-      "tableQueryOptions": {
-        "geohashField": "geohash",
-        "latitudeField": "latitude",
-        "longitudeField": "longitude",
-        "metricField": "metric",
-        "queryType": "geohash"
+      "options": {
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": true,
+              "style": {
+                "color": {
+                  "fixed": "dark-green"
+                },
+                "opacity": 0.4,
+                "rotation": {
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "field": "SUM(count)",
+                  "fixed": 5,
+                  "max": 15,
+                  "min": 5
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            },
+            "location": {
+              "mode": "auto"
+            },
+            "name": "Layer 1",
+            "tooltip": true,
+            "type": "markers"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "europe",
+          "lat": 46,
+          "lon": 14,
+          "zoom": 2
+        }
       },
+      "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:710",
-              "fake": true,
-              "field": "source_country.keyword",
-              "id": "7",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:711",
-              "fake": true,
-              "field": "date_range",
-              "id": "6",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:708",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT SUM(count), source_country, lat, lon FROM dmarc.rua GROUP BY source_country, lat, lon LIMIT 50 ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "count",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "source_country",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "lat",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "lon",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "source_country",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "lat",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "lon",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "rua"
         }
       ],
-      "thresholds": "10,500",
       "title": "Map of Message Source Countries",
-      "type": "grafana-worldmap-panel",
-      "unitPlural": "",
-      "unitSingle": "",
-      "unitSingular": "",
-      "valueName": "total"
+      "type": "geomap"
     },
     {
       "datasource": {
@@ -1886,7 +2536,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 70
+                "value": 128
               }
             ]
           },
@@ -1941,12 +2591,7 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Messages"
-          }
-        ]
+        "sortBy": []
       },
       "pluginVersion": "9.4.7",
       "targets": [
@@ -1959,11 +2604,12 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_country, SUM(count) FROM dmarc.rua GROUP BY source_country LIMIT 50 ",
+          "rawSql": "SELECT source_country AS \"Country\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY source_country ORDER BY SUM(count) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
               {
+                "alias": "\"Country\"",
                 "parameters": [
                   {
                     "name": "source_country",
@@ -1973,6 +2619,7 @@
                 "type": "function"
               },
               {
+                "alias": "\"Messages\"",
                 "name": "SUM",
                 "parameters": [
                   {
@@ -1992,7 +2639,15 @@
                 "type": "groupBy"
               }
             ],
-            "limit": 50
+            "limit": null,
+            "orderBy": {
+              "property": {
+                "name": "SUM(count)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
           },
           "table": "rua"
         }
@@ -2015,7 +2670,8 @@
     },
     {
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -2177,6 +2833,30 @@
                 "value": 106
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SPF Auth Result"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 97
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "DKIM Auth Result"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
           }
         ]
       },
@@ -2199,188 +2879,235 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Messages"
-          }
-        ]
+        "sortBy": []
       },
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:457",
-              "fake": true,
-              "field": "source_base_domain.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:458",
-              "fake": true,
-              "field": "source_reverse_dns.keyword",
-              "id": "7",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:459",
-              "fake": true,
-              "field": "source_ip_address.keyword",
-              "id": "8",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:460",
-              "fake": true,
-              "field": "source_country.keyword",
-              "id": "9",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:384",
-              "fake": true,
-              "field": "disposition.keyword",
-              "id": "12",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:391",
-              "fake": true,
-              "field": "spf_aligned",
-              "id": "13",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "false",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:398",
-              "fake": true,
-              "field": "dkim_aligned",
-              "id": "14",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "false",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:405",
-              "fake": true,
-              "field": "org_name.keyword",
-              "id": "15",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:412",
-              "fake": true,
-              "field": "spf_results.result.keyword",
-              "id": "16",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:622",
-              "fake": true,
-              "field": "header_from.keyword",
-              "id": "17",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:461",
-              "fake": true,
-              "field": "dkim_results.result.keyword",
-              "id": "10",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "50"
-              },
-              "type": "terms"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:455",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT source_base_domain AS \"Sending Domain\", source_reverse_dns AS \"PTR\", source_ip_address AS \"Source IP\", source_country AS \"Country\", disposition AS \"Disposition\", spf_aligned AS \"SPF\", dkim_aligned AS \"DKIM\", org_name AS \"Reporter\", spf_result AS \"SPF Auth Result\", dkim_result AS \"DKIM Auth Result\", domain AS \"Email Domain\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY source_base_domain, source_reverse_dns, source_ip_address, source_country, disposition, spf_aligned, dkim_aligned, org_name, spf_result, dkim_result, domain ORDER BY SUM(count) DESC ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Sending Domain\"",
+                "parameters": [
+                  {
+                    "name": "source_base_domain",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"PTR\"",
+                "parameters": [
+                  {
+                    "name": "source_reverse_dns",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Source IP\"",
+                "parameters": [
+                  {
+                    "name": "source_ip_address",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Country\"",
+                "parameters": [
+                  {
+                    "name": "source_country",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Disposition\"",
+                "parameters": [
+                  {
+                    "name": "disposition",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"SPF\"",
+                "parameters": [
+                  {
+                    "name": "spf_aligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"DKIM\"",
+                "parameters": [
+                  {
+                    "name": "dkim_aligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Reporter\"",
+                "parameters": [
+                  {
+                    "name": "org_name",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"SPF Auth Result\"",
+                "parameters": [
+                  {
+                    "name": "spf_result",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"DKIM Auth Result\"",
+                "parameters": [
+                  {
+                    "name": "dkim_result",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Email Domain\"",
+                "parameters": [
+                  {
+                    "name": "domain",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "count",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "source_base_domain",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "source_reverse_dns",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "source_ip_address",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "source_country",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "disposition",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "spf_aligned",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "dkim_aligned",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "org_name",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "spf_result",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "dkim_result",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "domain",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": null,
+            "orderBy": {
+              "property": {
+                "name": "SUM(count)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
+          },
+          "table": "rua"
         }
       ],
       "title": "Overview",
@@ -2428,7 +3155,8 @@
     },
     {
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -2506,7 +3234,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Percentage"
+              "options": "pct"
             },
             "properties": [
               {
@@ -2633,121 +3361,33 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:457",
-              "fake": true,
-              "field": "published_policy.adkim.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:458",
-              "fake": true,
-              "field": "published_policy.aspf.keyword",
-              "id": "7",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:459",
-              "fake": true,
-              "field": "published_policy.domain.keyword",
-              "id": "8",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:460",
-              "fake": true,
-              "field": "published_policy.fo.keyword",
-              "id": "9",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:384",
-              "fake": true,
-              "field": "published_policy.p.keyword",
-              "id": "12",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:391",
-              "fake": true,
-              "field": "published_policy.pct",
-              "id": "13",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:398",
-              "fake": true,
-              "field": "published_policy.sp.keyword",
-              "id": "14",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "false",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "code",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:455",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawQuery": true,
+          "rawSql": "SELECT domain AS \"Domain\", adkim AS \"DKIM Policy\", aspf AS \"SPF Policy\", sp AS \"Forensic Policy\", p AS \"Policy\", pct AS \"Percentage\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY domain, adkim, aspf, sp, p, pct ORDER BY SUM(count) DESC",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
         }
       ],
       "title": "Published Policies (as reported)",
@@ -2913,6 +3553,18 @@
                 ]
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "source_country"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 129
+              }
+            ]
           }
         ]
       },
@@ -2935,12 +3587,7 @@
           "show": false
         },
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Messages"
-          }
-        ]
+        "sortBy": []
       },
       "pluginVersion": "9.4.7",
       "targets": [
@@ -2953,11 +3600,12 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_ip_address, source_reverse_dns, source_base_domain, SUM(count) FROM dmarc.rua GROUP BY source_ip_address, source_reverse_dns, source_base_domain ORDER BY SUM(count) DESC LIMIT 1000 ",
+          "rawSql": "SELECT source_ip_address AS \"IP Address\", source_reverse_dns AS \"Reverse DNS\", source_base_domain AS \"Base Domain\", source_country AS \"Country\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY source_ip_address, source_reverse_dns, source_base_domain, source_country ORDER BY SUM(count) DESC LIMIT 1000 ",
           "refId": "A",
           "sql": {
             "columns": [
               {
+                "alias": "\"IP Address\"",
                 "parameters": [
                   {
                     "name": "source_ip_address",
@@ -2967,6 +3615,7 @@
                 "type": "function"
               },
               {
+                "alias": "\"Reverse DNS\"",
                 "parameters": [
                   {
                     "name": "source_reverse_dns",
@@ -2976,6 +3625,7 @@
                 "type": "function"
               },
               {
+                "alias": "\"Base Domain\"",
                 "parameters": [
                   {
                     "name": "source_base_domain",
@@ -2985,6 +3635,17 @@
                 "type": "function"
               },
               {
+                "alias": "\"Country\"",
+                "parameters": [
+                  {
+                    "name": "source_country",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
                 "name": "SUM",
                 "parameters": [
                   {
@@ -3013,6 +3674,13 @@
               {
                 "property": {
                   "name": "source_base_domain",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "source_country",
                   "type": "string"
                 },
                 "type": "groupBy"
@@ -3052,7 +3720,8 @@
     },
     {
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -3185,94 +3854,128 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:457",
-              "fake": true,
-              "field": "header_from.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:458",
-              "fake": true,
-              "field": "envelope_from.keyword",
-              "id": "7",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:459",
-              "fake": true,
-              "field": "spf_results.result.keyword",
-              "id": "8",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:460",
-              "fake": true,
-              "field": "spf_aligned",
-              "id": "9",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:461",
-              "fake": true,
-              "field": "source_base_domain.keyword",
-              "id": "10",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:455",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT header_from AS \"Header From\", envelope_from AS \"Envelope From\", spf_result AS \"SPF Result\", spf_aligned AS \"SPF Aligned\", source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY header_from, envelope_from, spf_result, spf_aligned, source_base_domain ORDER BY SUM(count) DESC ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Header From\"",
+                "parameters": [
+                  {
+                    "name": "header_from",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Envelope From\"",
+                "parameters": [
+                  {
+                    "name": "envelope_from",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"SPF Result\"",
+                "parameters": [
+                  {
+                    "name": "spf_result",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"SPF Aligned\"",
+                "parameters": [
+                  {
+                    "name": "spf_aligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Reverse DNS Base\"",
+                "parameters": [
+                  {
+                    "name": "source_base_domain",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "count",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "header_from",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "envelope_from",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "spf_result",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "spf_aligned",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "source_base_domain",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": null,
+            "orderBy": {
+              "property": {
+                "name": "SUM(count)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
+          },
+          "table": "rua"
         }
       ],
       "title": "SPF Alignment Details",
@@ -3297,7 +4000,8 @@
     },
     {
       "datasource": {
-        "uid": "$datasourceag"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -3403,6 +4107,24 @@
                 ]
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Header From"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Check ${__data.fields[\"header_from.keyword\"]} DKIM record",
+                    "url": "https://dmarcian.com/spf-survey/?domain=${__data.fields[%22header_from.keyword%22]}"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -3434,107 +4156,145 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:457",
-              "fake": true,
-              "field": "header_from.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:458",
-              "fake": true,
-              "field": "dkim_results.selector.keyword",
-              "id": "7",
-              "settings": {
-                "min_doc_count": "1",
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:459",
-              "fake": true,
-              "field": "dkim_results.domain.keyword",
-              "id": "8",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:460",
-              "fake": true,
-              "field": "dkim_results.result.keyword",
-              "id": "9",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:798",
-              "fake": true,
-              "field": "dkim_aligned",
-              "id": "11",
-              "settings": {
-                "min_doc_count": "1",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:461",
-              "fake": true,
-              "field": "source_base_domain.keyword",
-              "id": "10",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "4",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourceag"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:455",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "sum"
-            }
-          ],
-          "query": "header_from.keyword:$fromdomain",
+          "rawSql": "SELECT header_from AS \"Header From\", dkim_selector AS \"DKIM Selector\", dkim_domain AS \"DKIM Domain\", dkim_result AS \"DKIM Result\", dkim_aligned AS \"DKIM Aligned\", source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY header_from, dkim_selector, dkim_domain, dkim_result, dkim_aligned, source_base_domain ORDER BY SUM(count) DESC ",
           "refId": "A",
-          "timeField": "date_range"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Header From\"",
+                "parameters": [
+                  {
+                    "name": "header_from",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"DKIM Selector\"",
+                "parameters": [
+                  {
+                    "name": "dkim_selector",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"DKIM Domain\"",
+                "parameters": [
+                  {
+                    "name": "dkim_domain",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"DKIM Result\"",
+                "parameters": [
+                  {
+                    "name": "dkim_result",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"DKIM Aligned\"",
+                "parameters": [
+                  {
+                    "name": "dkim_aligned",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Reverse DNS Base\"",
+                "parameters": [
+                  {
+                    "name": "source_base_domain",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
+                "name": "SUM",
+                "parameters": [
+                  {
+                    "name": "count",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "header_from",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "dkim_selector",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "dkim_domain",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "dkim_result",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "dkim_aligned",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "source_base_domain",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": null,
+            "orderBy": {
+              "property": {
+                "name": "SUM(count)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
+          },
+          "table": "rua"
         }
       ],
       "title": "DKIM Alignment Details",
@@ -3868,99 +4628,109 @@
       "type": "table"
     },
     {
-      "circleMaxSize": 30,
-      "circleMinSize": 2,
-      "colors": [
-        "#C4162A",
-        "#FA6400",
-        "#37872D"
-      ],
-      "datasource": {
-        "uid": "$datasourcefo"
+      "datasource": {},
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
       },
-      "decimals": 0,
-      "esMetric": "Count",
       "gridPos": {
         "h": 11,
         "w": 8,
         "x": 0,
         "y": 117
       },
-      "hideEmpty": true,
-      "hideZero": true,
       "id": 22,
-      "initialZoom": "1",
       "links": [],
-      "locationData": "countries",
-      "mapCenter": "(0°, 0°)",
-      "mapCenterLatitude": 0,
-      "mapCenterLongitude": 0,
       "maxDataPoints": 1,
-      "mouseWheelZoom": true,
-      "showLegend": true,
-      "stickyLabels": true,
-      "tableQueryOptions": {
-        "geohashField": "geohash",
-        "labelField": "",
-        "latitudeField": "latitude",
-        "longitudeField": "longitude",
-        "metricField": "metric",
-        "queryType": "geohash"
-      },
-      "targets": [
-        {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:60",
-              "fake": true,
-              "field": "source_country.keyword",
-              "id": "9",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_term",
-                "size": "10"
-              },
-              "type": "terms"
+      "options": {
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": true,
+              "style": {
+                "color": {
+                  "fixed": "dark-green"
+                },
+                "opacity": 0.4,
+                "rotation": {
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "fixed": 5,
+                  "max": 15,
+                  "min": 2
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
             },
-            {
-              "$$hashKey": "object:61",
-              "fake": true,
-              "field": "arrival_date",
-              "id": "7",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "datasource": {
-            "uid": "$datasourcefo"
-          },
-          "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:58",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "count"
-            }
-          ],
-          "query": "domain.keyword:$fromdomain",
-          "refId": "A",
-          "timeField": "arrival_date"
+            "location": {
+              "mode": "auto"
+            },
+            "name": "Layer 1",
+            "tooltip": true,
+            "type": "markers"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "zoom": 1
         }
-      ],
-      "thresholds": "100,0",
+      },
+      "pluginVersion": "9.4.7",
       "title": "Forensic Sample Sources by Country",
-      "type": "grafana-worldmap-panel",
-      "unitPlural": "",
-      "unitSingle": "",
-      "valueName": "total"
+      "type": "geomap"
     },
     {
       "datasource": {
@@ -4341,68 +5111,6 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "No data sources found",
-          "value": ""
-        },
-        "hide": 2,
-        "includeAll": false,
-        "label": "Datasource: Aggregate",
-        "multi": false,
-        "name": "datasourceag",
-        "options": [],
-        "query": "elasticsearch",
-        "refresh": 1,
-        "regex": "/.*dmarc-ag/",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "No data sources found",
-          "value": ""
-        },
-        "hide": 2,
-        "includeAll": false,
-        "label": "Datasource: Forensic",
-        "multi": false,
-        "name": "datasourcefo",
-        "options": [],
-        "query": "elasticsearch",
-        "refresh": 1,
-        "regex": "/.*dmarc-fo/",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "uid": "$datasourceag"
-        },
-        "definition": "{\"find\":\"terms\",\"field\":\"header_from.keyword\"}",
-        "hide": 0,
-        "includeAll": true,
-        "label": "From Domain",
-        "multi": true,
-        "name": "fromdomain",
-        "options": [],
-        "query": "{\"find\":\"terms\",\"field\":\"header_from.keyword\"}",
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
         "auto": false,
         "auto_count": 30,
         "auto_min": "10s",
@@ -4425,29 +5133,6 @@
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "",
-          "value": ""
-        },
-        "datasource": {
-          "type": "mysql",
-          "uid": "LwPYaoEVk"
-        },
-        "definition": "SELECT * FROM dmarc.rua",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "query_rua",
-        "options": [],
-        "query": "SELECT * FROM dmarc.rua",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
       }
     ]
   },
@@ -4483,6 +5168,6 @@
   "timezone": "",
   "title": "DMARC Reports",
   "uid": "SDksirRWz",
-  "version": 11,
+  "version": 88,
   "weekStart": ""
 }
