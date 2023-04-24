@@ -2330,7 +2330,7 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 1000
               }
             ]
           }
@@ -2366,6 +2366,7 @@
               "showLegend": true,
               "style": {
                 "color": {
+                  "field": "SUM(count)",
                   "fixed": "dark-green"
                 },
                 "opacity": 0.4,
@@ -2397,7 +2398,7 @@
             "location": {
               "mode": "auto"
             },
-            "name": "Layer 1",
+            "name": "Messages",
             "tooltip": true,
             "type": "markers"
           }
@@ -2639,7 +2640,6 @@
                 "type": "groupBy"
               }
             ],
-            "limit": null,
             "orderBy": {
               "property": {
                 "name": "SUM(count)",
@@ -3097,7 +3097,6 @@
                 "type": "groupBy"
               }
             ],
-            "limit": null,
             "orderBy": {
               "property": {
                 "name": "SUM(count)",
@@ -3965,7 +3964,6 @@
                 "type": "groupBy"
               }
             ],
-            "limit": null,
             "orderBy": {
               "property": {
                 "name": "SUM(count)",
@@ -4284,7 +4282,6 @@
                 "type": "groupBy"
               }
             ],
-            "limit": null,
             "orderBy": {
               "property": {
                 "name": "SUM(count)",
@@ -4646,8 +4643,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4751,8 +4747,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4781,8 +4776,7 @@
                   "mode": "percentage",
                   "steps": [
                     {
-                      "color": "green",
-                      "value": null
+                      "color": "green"
                     },
                     {
                       "color": "dark-purple",
@@ -4899,8 +4893,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -4959,8 +4952,7 @@
                   "mode": "percentage",
                   "steps": [
                     {
-                      "color": "green",
-                      "value": null
+                      "color": "green"
                     },
                     {
                       "color": "dark-purple",
@@ -5168,6 +5160,6 @@
   "timezone": "",
   "title": "DMARC Reports",
   "uid": "SDksirRWz",
-  "version": 88,
+  "version": 91,
   "weekStart": ""
 }
