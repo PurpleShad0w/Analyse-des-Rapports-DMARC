@@ -18,8 +18,10 @@ from grafana_client.util import setup_logging
 import json
 import logging
 import argparse
+import eml_parser
+from functools import reduce
+from operator import getitem
 import re
-from collections import OrderedDict
 
 parser = argparse.ArgumentParser(description="DMARC Analyser",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -49,15 +51,21 @@ reader = geolite2.reader()
 logger = logging.getLogger(__name__)
 setup_logging(level=logging.DEBUG)
 grafana_client = GrafanaApi.from_url()
-feedback_report_regex = re.compile(r"^([\w\-]+): (.+)$", re.MULTILINE)
-delivery_results = ["delivered", "spam", "policy", "reject", "other"]
-optional_fields = ["original_envelope_id", "dkim_domain", "original_mail_from", "original_rcpt_to"]
+ep = eml_parser.EmlParser()
 
 if len(str(month)) == 1:
     month = "0" + str(month)
 
 path_rua = path_default + 'rua/' + str(year) + "/" + str(month) + "/"
 path_ruf = path_default + 'ruf/' + str(year) + "/" + str(month) + "/"
+
+def json_serial(obj):
+    if isinstance(obj, datetime):
+        serial = obj.isoformat()
+        return serial
+
+def get_item_from_dict(dataDict, mapList):
+    return reduce(getitem, mapList, dataDict)
 
 report_data_template_meta = {
     "org_name":'./report_metadata/org_name',
@@ -98,6 +106,22 @@ report_data_template_record = {
     "spf_domain":'auth_results/spf/domain',
     "spf_scope":'auth_results/spf/scope',
     "spf_result":'auth_results/spf/result',
+}
+
+report_data_template_ruf = {
+    'subject':'header:subject',
+    'from':'header:from',
+    'to':'header:to',
+    'date':'header:date',
+    'source_ip':'attachment:0:content_header:x-onpremexternalip',
+    'country':'',
+    'auth_results':'attachment:0:content_header:authentication-results',
+    'spf':'',
+    'dkim':'',
+    'tls':'',
+    'dmarc':'',
+    'message_id':'header:header:message-id',
+    'full_mail':''
 }
 
 country_coords = {
@@ -148,8 +172,6 @@ commands_rua = [
     count, spf_aligned, dkim_aligned, dmarc_aligned, disposition, policy_override_reasons, policy_override_comments,
     envelope_from, header_from, envelope_to, dkim_domain, dkim_selector, dkim_result, spf_domain, spf_scope,
     spf_result) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-    """CREATE TABLE RUF (
-    record_id INTEGER)""",
     """ALTER TABLE RUA
     ADD time DATE AS (CAST(begin_date AS DATE))""",
     """ALTER TABLE RUA
@@ -179,6 +201,28 @@ commands_rua = [
     """ALTER TABLE RUA
     ADD dmarc_aligned_w INTEGER AS (dmarc_aligned * count)""",
     "SELECT * FROM RUA"]
+
+commands_ruf = [
+    """CREATE TABLE RUF (
+    record_id INTEGER,
+    subject VARCHAR(255),
+    from_mail VARCHAR(255),
+    to_mail VARCHAR(255),
+    date VARCHAR(255),
+    source_ip VARCHAR(255),
+    country VARCHAR(255),
+    auth_results LONGTEXT,
+    spf VARCHAR(255),
+    dkim VARCHAR(255),
+    tls VARCHAR(255),
+    dmarc VARCHAR(255),
+    message_id VARCHAR(255),
+    full_mail LONGTEXT,
+    PRIMARY KEY (record_id))""",
+    """INSERT INTO RUF (record_id, subject, from_mail, to_mail, date, source_ip, country, auth_results, spf, dkim, tls, dmarc, message_id,
+    full_mail) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+    "SELECT * FROM RUF"
+]
 
 
 def unzip(email, path_in, path_out, overwrite = False):
@@ -359,68 +403,56 @@ def gather_ruf(path_mail, path_report, path_attachment):
     reports_data = []
 
     for report in reports:
-        with open(path_report + report, 'r') as f:
+        with open(path_report + report, 'rb') as f:
             feedback_report = f.read()
-        
-        parsed_report = OrderedDict()
-        report_values = feedback_report_regex.findall(feedback_report)
 
-        for report_value in report_values:
-            key = report_value[0].lower().replace("-", "_")
-            parsed_report[key] = report_value[1]
-        
-        if "version" not in parsed_report:
-            parsed_report["version"] = None
+        parsed_report = report_data_template_ruf.copy()
+        parsed_eml = ep.decode_email_bytes(feedback_report)
 
-        if "user_agent" not in parsed_report:
-            parsed_report["user_agent"] = None
+        for key, value in report_data_template_ruf.items():
+            value = value.split(':')
 
-        if "delivery_result" not in parsed_report:
-            parsed_report["delivery_result"] = None
-        else:
-            for delivery_result in delivery_results:
-                if delivery_result in parsed_report["delivery_result"].lower():
-                    parsed_report["delivery_result"] = delivery_result
-                    break
-        if parsed_report["delivery_result"] not in delivery_results:
-            parsed_report["delivery_result"] = "other"
+            for i in range(len(value)):
+                if len(value[i]) == 1:
+                    value[i] = int(value[i])
 
-        # date = parsed_report["arrival_date"]
-        # date_utc = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-        # parsed_report["arrival_date_utc"] = date_utc
+            try:
+                info = get_item_from_dict(parsed_eml, value)
+                parsed_report[key] = str(info)
+            except:
+                if key == 'full_mail':
+                    parsed_report[key] = str(parsed_eml)
+                    continue
 
-        ip_address = re.split(r'\s', parsed_report["source_ip"]).pop(0)
+                parsed_report[key] = ''
+
+        ip_address = parsed_report['source_ip'].replace('[\'', '').replace('\']', '')
         try:
-            domain = socket.gethostbyaddr(ip_address)[0]
-            base_domain = tldextract.extract(domain).registered_domain
-        except socket.herror:
-            domain = ''
-            base_domain = ''
-        parsed_report["source"] = base_domain
+            country = reader.get(ip_address)['country']['iso_code']
+        except TypeError:
+            country = ''
+        parsed_report['country'] = country
 
-        if "identity_alignment" not in parsed_report:
-            parsed_report["authentication_mechanisms"] = []
-        elif parsed_report["identity_alignment"] == "none":
-            parsed_report["authentication_mechanisms"] = []
-            del parsed_report["identity_alignment"]
-        else:
-            auth_mechanisms = parsed_report["identity_alignment"]
-            auth_mechanisms = auth_mechanisms.split(",")
-            parsed_report["authentication_mechanisms"] = auth_mechanisms
-            del parsed_report["identity_alignment"]
+        results = parsed_report['auth_results']
+        spf = re.search('spf=(.*) smtp.mailfrom', results).group(1)
+        dkim = re.search('dkim=(.*) header.d', results).group(1)
+        tls = re.search('tls=(.*) key.ciphersuite', results).group(1)
+        dmarc = re.search('dmarc=(.*) header', results).group(1)
+        parsed_report['spf'] = spf
+        parsed_report['dkim'] = dkim
+        parsed_report['tls'] = tls
+        parsed_report['dmarc'] = dmarc
 
-        if "auth_failure" not in parsed_report:
-            parsed_report["auth_failure"] = "dmarc"
-            auth_failure = parsed_report["auth_failure"].split(",")
-            parsed_report["auth_failure"] = auth_failure
-
-        for optional_field in optional_fields:
-            if optional_field not in parsed_report:
-                parsed_report[optional_field] = None
-        
         reports_data.append(parsed_report)
 
-    return reports_data
+    data, id = [], 1
+    for report in reports_data:
+        entry = list(report.values())
+        entry.insert(0, id)
+        id += 1
+        data.append(tuple(entry))
+    
+    return data
 
 
 def upload_rua(data, create_db = False, show = True):
@@ -442,7 +474,39 @@ def upload_rua(data, create_db = False, show = True):
                 mydb.commit()
                 continue
     
-            if i == 17:
+            if i == 16:
+                database = pd.read_sql(command, mydb)
+                break
+    
+            mycursor.execute(command)
+            mydb.commit()
+            i+=1
+    
+        except mysql.connector.Error as error:
+            i+=1
+            print(error)
+    
+    mydb.close()
+
+    if show:
+        print(database)
+
+    return database
+
+
+def upload_ruf(data, show = True):
+    mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='DMARC')
+    mycursor = mydb.cursor()
+    i = 0
+
+    for command in commands_ruf:
+        try:
+            if i == 1:
+                mycursor.executemany(command, data)
+                mydb.commit()
+                continue
+    
+            if i == 2:
                 database = pd.read_sql(command, mydb)
                 break
     
@@ -480,6 +544,6 @@ def update_dashboard(show = True):
 
 rua = gather_rua(path_mail_rua, path_report_rua, path_attachment_rua)
 ruf = gather_ruf(path_mail_ruf, path_report_ruf, path_attachment_ruf)
-print(ruf)
 database_rua = upload_rua(rua, config['initialize'], config['show'])
+database_ruf = upload_ruf(ruf, config['show'])
 update_dashboard(config['show'])
