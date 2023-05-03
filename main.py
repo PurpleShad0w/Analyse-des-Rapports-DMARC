@@ -3,6 +3,7 @@ import sys
 from datetime import datetime
 from email import policy
 from email.parser import BytesParser
+from email.message import EmailMessage
 from bz2 import BZ2Decompressor
 import lzma
 import gzip
@@ -18,9 +19,6 @@ from grafana_client.util import setup_logging
 import json
 import logging
 import argparse
-import eml_parser
-from functools import reduce
-from operator import getitem
 import re
 
 parser = argparse.ArgumentParser(description="DMARC Analyser",
@@ -51,7 +49,6 @@ reader = geolite2.reader()
 logger = logging.getLogger(__name__)
 setup_logging(level=logging.DEBUG)
 grafana_client = GrafanaApi.from_url()
-ep = eml_parser.EmlParser()
 
 if len(str(month)) == 1:
     month = "0" + str(month)
@@ -63,9 +60,6 @@ def json_serial(obj):
     if isinstance(obj, datetime):
         serial = obj.isoformat()
         return serial
-
-def get_item_from_dict(dataDict, mapList):
-    return reduce(getitem, mapList, dataDict)
 
 report_data_template_meta = {
     "org_name":'./report_metadata/org_name',
@@ -108,20 +102,22 @@ report_data_template_record = {
     "spf_result":'auth_results/spf/result',
 }
 
-report_data_template_ruf = {
-    'subject':'header:subject',
-    'from':'header:from',
-    'to':'header:to',
-    'date':'header:date',
-    'source_ip':'attachment:0:content_header:x-onpremexternalip',
-    'country':'',
-    'auth_results':'attachment:0:content_header:authentication-results',
-    'spf':'',
-    'dkim':'',
-    'tls':'',
-    'dmarc':'',
-    'message_id':'header:header:message-id',
-    'full_mail':''
+template_ruf = {
+    'feedback_type':'Feedback-Type: (.*)\n',
+    'user_agent':'User-Agent: (.*)\n',
+    'version':'Version: (.*)\n',
+    'original_from':'Original-Mail-From: (.*)\n',
+    'original_to':'Original-Rcpt-To: (.*)\n',
+    'arrival_date':'Arrival-Date: (.*)\n',
+    'id':'Message-ID: (.*)\n',
+    'auth_results':'Authentication-Results: (.*)\n',
+    'source_ip':'Source-IP: (.*)\n',
+    'delivery_result':'Delivery-Result: (.*)\n',
+    'auth_failure':'Auth-Failure: (.*)\n',
+    'reported_domain':'Reported-Domain: (.*)\n',
+    'original_envelope_id':'Original-Envelope-Id: (.*)\n',
+    'dkim_domain':'DKIM-Domain: (.*)\n',
+    'identity_alignment':'Identity-Alignment: (.*)\n'
 }
 
 country_coords = {
@@ -265,7 +261,7 @@ def unzip(email, path_in, path_out, overwrite = False):
 
 
 def get_attachment(email, path_mail, path_report, path_attachment):
-    if email.endswith('.xml') or email.endswith('.eml'):
+    if email.endswith('.xml'):
         with open(path_mail + email, 'rb') as fin, open(path_report + email, 'wb') as fout:
             data = fin.read()
             fout.write(data)
@@ -273,12 +269,25 @@ def get_attachment(email, path_mail, path_report, path_attachment):
         os.remove(path_mail + email)
         return
 
+    elif email.endswith('.eml'):
+        with open(path_mail + email, 'rb') as fin, open(path_report + email, 'wb') as fout:
+            data = fin.read()
+            fout.write(data)
+
+        return
+
     mail = BytesParser(policy=policy.default).parse(open(path_mail + email, 'rb'))
 
     for attachment in mail.iter_attachments():
         name = attachment.get_filename()
+        if name == None:
+            name = email + '.report'
         data = attachment.get_content()
 
+        if type(data) == EmailMessage:
+            data = data.as_bytes()
+            name = name + '.message'
+        
         with open(path_attachment + name, 'wb') as f:
             f.write(data)
 
@@ -403,45 +412,17 @@ def gather_ruf(path_mail, path_report, path_attachment):
     reports_data = []
 
     for report in reports:
-        with open(path_report + report, 'rb') as f:
-            feedback_report = f.read()
+        if not report.endswith('.message') and not report.endswith('.eml'):
+            with open(path_report + report, 'r') as f:
+                content = f.read()
+        
+            parsed_report = template_ruf.copy()
 
-        parsed_report = report_data_template_ruf.copy()
-        parsed_eml = ep.decode_email_bytes(feedback_report)
-
-        for key, value in report_data_template_ruf.items():
-            value = value.split(':')
-
-            for i in range(len(value)):
-                if len(value[i]) == 1:
-                    value[i] = int(value[i])
-
-            try:
-                info = get_item_from_dict(parsed_eml, value)
-                parsed_report[key] = str(info)
-            except:
-                if key == 'full_mail':
-                    parsed_report[key] = str(parsed_eml)
-                    continue
-
-                parsed_report[key] = ''
-
-        ip_address = parsed_report['source_ip'].replace('[\'', '').replace('\']', '')
-        try:
-            country = reader.get(ip_address)['country']['iso_code']
-        except TypeError:
-            country = ''
-        parsed_report['country'] = country
-
-        results = parsed_report['auth_results']
-        spf = re.search('spf=(.*) smtp.mailfrom', results).group(1)
-        dkim = re.search('dkim=(.*) header.d', results).group(1)
-        tls = re.search('tls=(.*) key.ciphersuite', results).group(1)
-        dmarc = re.search('dmarc=(.*) header', results).group(1)
-        parsed_report['spf'] = spf
-        parsed_report['dkim'] = dkim
-        parsed_report['tls'] = tls
-        parsed_report['dmarc'] = dmarc
+            for key, value in template_ruf.items():
+                try:
+                    parsed_report[key] = re.search(value, content).group(1)
+                except AttributeError:
+                    parsed_report[key] = ''
 
         reports_data.append(parsed_report)
 
