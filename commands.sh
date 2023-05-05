@@ -59,8 +59,6 @@ sudo docker compose -f ./docker-compose.yml up -d
 sudo docker compose down
 
 # Results at http://localhost:3000/
-# Current Snapshot at https://snapshots.raintank.io/dashboard/snapshot/mDGImXGqTzd3O5yGKZxBJnf7hFSdJdDn
-
 
 
 # SQL

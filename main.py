@@ -112,6 +112,9 @@ template_ruf = {
     'id':'Message-ID: (.*)\n',
     'auth_results':'Authentication-Results: (.*)\n',
     'source_ip':'Source-IP: (.*)\n',
+    'source_country':'',
+    'lat':'',
+    'lon':'',
     'delivery_result':'Delivery-Result: (.*)\n',
     'auth_failure':'Auth-Failure: (.*)\n',
     'reported_domain':'Reported-Domain: (.*)\n',
@@ -201,22 +204,28 @@ commands_rua = [
 commands_ruf = [
     """CREATE TABLE RUF (
     record_id INTEGER,
-    subject VARCHAR(255),
-    from_mail VARCHAR(255),
-    to_mail VARCHAR(255),
-    date VARCHAR(255),
+    feedback_type VARCHAR(255),
+    user_agent VARCHAR(255),
+    version VARCHAR(255),
+    original_from VARCHAR(255),
+    original_to VARCHAR(255),
+    arrival_date VARCHAR(255),
+    id VARCHAR(255),
+    auth_results VARCHAR(255),
     source_ip VARCHAR(255),
-    country VARCHAR(255),
-    auth_results LONGTEXT,
-    spf VARCHAR(255),
-    dkim VARCHAR(255),
-    tls VARCHAR(255),
-    dmarc VARCHAR(255),
-    message_id VARCHAR(255),
-    full_mail LONGTEXT,
+    source_country VARCHAR(255),
+    lat VARCHAR(255),
+    lon VARCHAR(255),
+    delivery_result VARCHAR(255),
+    auth_failure VARCHAR(255),
+    reported_domain VARCHAR(255),
+    original_envelope_id VARCHAR(255),
+    dkim_domain VARCHAR(255),
+    identity_alignment VARCHAR(255),
     PRIMARY KEY (record_id))""",
-    """INSERT INTO RUF (record_id, subject, from_mail, to_mail, date, source_ip, country, auth_results, spf, dkim, tls, dmarc, message_id,
-    full_mail) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+    """INSERT INTO RUF (record_id, feedback_type, user_agent, version, original_from, original_to, arrival_date, id, auth_results, source_ip, source_country, lat, lon,
+    delivery_result, auth_failure, reported_domain, original_envelope_id, dkim_domain,
+    identity_alignment) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
     "SELECT * FROM RUF"
 ]
 
@@ -351,7 +360,10 @@ def gather_rua(path_mail, path_report, path_attachment):
                     continue
             
             ip_address = root.find('./record/row/source_ip').text
-            country = reader.get(ip_address)['country']['iso_code']
+            try:
+                country = reader.get(ip_address)['country']['iso_code']
+            except TypeError:
+                country = ''
             try:
                 domain = socket.gethostbyaddr(ip_address)[0]
                 base_domain = tldextract.extract(domain).registered_domain
@@ -359,7 +371,10 @@ def gather_rua(path_mail, path_report, path_attachment):
                 domain = ''
                 base_domain = ''
             report_data_record['source_country'] = country
-            report_data_record['lat'], report_data_record['lon'] = country_coords[country].split(',')
+            try:
+                report_data_record['lat'], report_data_record['lon'] = country_coords[country].split(',')
+            except:
+                report_data_record['lat'], report_data_record['lon'] = '', ''
             report_data_record['source_reverse_dns'] = domain
             report_data_record['source_base_domain'] = base_domain
             if report_data_record['spf_aligned'] == 'pass':
@@ -421,8 +436,19 @@ def gather_ruf(path_mail, path_report, path_attachment):
             for key, value in template_ruf.items():
                 try:
                     parsed_report[key] = re.search(value, content).group(1)
-                except AttributeError:
+                except (AttributeError, IndexError) as error:
                     parsed_report[key] = ''
+
+        ip_address = parsed_report['source_ip']
+        try:
+            country = reader.get(ip_address)['country']['iso_code']
+        except (TypeError, ValueError) as error:
+            country = ''
+        parsed_report['source_country'] = country
+        try:
+            parsed_report['lat'], parsed_report['lon'] = country_coords[country].split(',')
+        except:
+            parsed_report['lat'], parsed_report['lon'] = '', ''
 
         reports_data.append(parsed_report)
 

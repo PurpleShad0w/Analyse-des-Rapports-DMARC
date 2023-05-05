@@ -3233,7 +3233,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "pct"
+              "options": "Percentage"
             },
             "properties": [
               {
@@ -3265,7 +3265,7 @@
               },
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 120
               }
             ]
           },
@@ -3540,16 +3540,6 @@
               {
                 "id": "custom.width",
                 "value": 300
-              },
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Visit Domain",
-                    "url": "https://${__data.fields[\"source_base_domain.keyword\"]}"
-                  }
-                ]
               }
             ]
           },
@@ -3784,42 +3774,6 @@
               {
                 "id": "custom.width",
                 "value": 400
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Reverse DNS Base"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Visit Domain",
-                    "url": "https://${__data.fields[\"source_base_domain.keyword\"]}"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Header From"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Check ${__data.fields[\"header_from.keyword\"]} SPF record",
-                    "url": "https://dmarcian.com/spf-survey/?domain=${__data.fields[\"header_from.keyword\"]}"
-                  }
-                ]
               }
             ]
           }
@@ -4069,58 +4023,12 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Reverse DNS Base"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Visit Domain",
-                    "url": "https://${__data.fields[\"source_base_domain.keyword\"]}"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "DKIM Selector"
             },
             "properties": [
               {
                 "id": "custom.width",
                 "value": 320
-              },
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Open dmarcian.com DKIM Record Checker",
-                    "url": "https://dmarcian.com/dkim-inspector/?domain=${__data.fields[\"dkim_results.domain.keyword\"]}&selector=${__data.fields[\"dkim_results.selector.keyword\"]}"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Header From"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Check ${__data.fields[\"header_from.keyword\"]} DKIM record",
-                    "url": "https://dmarcian.com/spf-survey/?domain=${__data.fields[%22header_from.keyword%22]}"
-                  }
-                ]
               }
             ]
           }
@@ -4346,7 +4254,8 @@
     },
     {
       "datasource": {
-        "uid": "$datasourcefo"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -4377,7 +4286,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Arrival Date (UTC)"
+              "options": "Arrival Date"
             },
             "properties": [
               {
@@ -4389,48 +4298,67 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "AuthFailure"
+              "options": "Auth Failure"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 84
+                "value": 100
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "DeliveryResult"
+              "options": "Delivery Result"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 104
+                "value": 150
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Count"
+              "options": "Messages"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 71
+                "value": 300
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "gauge"
+                }
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "ReplyTo"
+              "options": "Original To"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 122
+                "value": 200
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Original From"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 200
               }
             ]
           }
@@ -4459,145 +4387,127 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:340",
-              "fake": true,
-              "field": "Arrival Date (UTC)",
-              "id": "6",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": 1,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            },
-            {
-              "$$hashKey": "object:341",
-              "fake": true,
-              "field": "sample.headers.from.keyword",
-              "id": "7",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:342",
-              "fake": true,
-              "field": "sample.headers.to.keyword",
-              "id": "8",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:343",
-              "fake": true,
-              "field": "sample.headers.reply-to.keyword",
-              "id": "10",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:344",
-              "fake": true,
-              "field": "auth_failure.keyword",
-              "id": "11",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:345",
-              "fake": true,
-              "field": "sample.subject.keyword",
-              "id": "12",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:346",
-              "fake": true,
-              "field": "delivery_results.keyword",
-              "id": "14",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:347",
-              "fake": true,
-              "field": "authentication_results.keyword",
-              "id": "15",
-              "settings": {
-                "min_doc_count": 1,
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:348",
-              "fake": true,
-              "field": "sample.headers.received.keyword",
-              "id": "13",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourcefo"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:338",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "count"
-            }
-          ],
-          "query": "domain.keyword:$fromdomain",
+          "rawSql": "SELECT arrival_date AS \"Arrival Date\", auth_failure AS \"Auth Failure\", delivery_result AS \"Delivery Result\", original_from AS \"Original From\", original_to AS \"Original To\", COUNT(feedback_type) AS \"Messages\" FROM dmarc.ruf GROUP BY arrival_date, auth_failure, delivery_result, original_from, original_to ORDER BY COUNT(feedback_type) DESC ",
           "refId": "A",
-          "timeField": "arrival_date"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Arrival Date\"",
+                "parameters": [
+                  {
+                    "name": "arrival_date",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Auth Failure\"",
+                "parameters": [
+                  {
+                    "name": "auth_failure",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Delivery Result\"",
+                "parameters": [
+                  {
+                    "name": "delivery_result",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Original From\"",
+                "parameters": [
+                  {
+                    "name": "original_from",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Original To\"",
+                "parameters": [
+                  {
+                    "name": "original_to",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "feedback_type",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "arrival_date",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "auth_failure",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "delivery_result",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "original_from",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "original_to",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "COUNT(feedback_type)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
+          },
+          "table": "ruf"
         }
       ],
       "title": "Forensic Samples",
@@ -4625,7 +4535,10 @@
       "type": "table"
     },
     {
-      "datasource": {},
+      "datasource": {
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4643,7 +4556,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -4664,6 +4578,11 @@
       "links": [],
       "maxDataPoints": 1,
       "options": {
+        "basemap": {
+          "config": {},
+          "name": "Layer 0",
+          "type": "default"
+        },
         "controls": {
           "mouseWheelZoom": true,
           "showAttribution": true,
@@ -4678,7 +4597,7 @@
               "showLegend": true,
               "style": {
                 "color": {
-                  "fixed": "dark-green"
+                  "fixed": "dark-red"
                 },
                 "opacity": 0.4,
                 "rotation": {
@@ -4708,7 +4627,7 @@
             "location": {
               "mode": "auto"
             },
-            "name": "Layer 1",
+            "name": "Messages",
             "tooltip": true,
             "type": "markers"
           }
@@ -4725,12 +4644,93 @@
         }
       },
       "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "dataset": "dmarc",
+          "datasource": {
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
+          },
+          "editorMode": "builder",
+          "format": "table",
+          "hide": false,
+          "rawSql": "SELECT COUNT(feedback_type), source_country, lat, lon FROM dmarc.ruf GROUP BY source_country, lat, lon LIMIT 50 ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "feedback_type",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "source_country",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "lat",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "parameters": [
+                  {
+                    "name": "lon",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "source_country",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "lat",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "lon",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "ruf"
+        }
+      ],
       "title": "Forensic Sample Sources by Country",
       "type": "geomap"
     },
     {
       "datasource": {
-        "uid": "$datasourcefo"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -4747,7 +4747,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -4760,7 +4761,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Count"
+              "options": "Messages"
             },
             "properties": [
               {
@@ -4776,7 +4777,8 @@
                   "mode": "percentage",
                   "steps": [
                     {
-                      "color": "green"
+                      "color": "green",
+                      "value": null
                     },
                     {
                       "color": "dark-purple",
@@ -4795,7 +4797,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 70
+                "value": 125
               }
             ]
           }
@@ -4824,39 +4826,59 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:840",
-              "fake": true,
-              "field": "source_country.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "none",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "0"
-              },
-              "type": "terms"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourcefo"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:838",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "count"
-            }
-          ],
-          "query": "domain.keyword:$fromdomain",
+          "rawSql": "SELECT source_country AS \"Country\", COUNT(feedback_type) AS \"Messages\" FROM dmarc.ruf GROUP BY source_country ORDER BY COUNT(feedback_type) DESC ",
           "refId": "A",
-          "timeField": "arrival_date"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"Country\"",
+                "parameters": [
+                  {
+                    "name": "source_country",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "feedback_type",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "source_country",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "COUNT(feedback_type)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
+          },
+          "table": "ruf"
         }
       ],
       "title": "DMARC Forensic Sample Source Countries",
@@ -4876,7 +4898,8 @@
     },
     {
       "datasource": {
-        "uid": "$datasourcefo"
+        "type": "mysql",
+        "uid": "LwPYaoEVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -4893,7 +4916,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -4911,25 +4935,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 70
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Base Domain"
-            },
-            "properties": [
-              {
-                "id": "links",
-                "value": [
-                  {
-                    "targetBlank": true,
-                    "title": "Visit https://${__data.fields[\"source_base_domain.keyword\"]}",
-                    "url": "https://${__data.fields[\"source_base_domain.keyword\"]}"
-                  }
-                ]
+                "value": 80
               }
             ]
           },
@@ -4952,7 +4958,8 @@
                   "mode": "percentage",
                   "steps": [
                     {
-                      "color": "green"
+                      "color": "green",
+                      "value": null
                     },
                     {
                       "color": "dark-purple",
@@ -4993,81 +5000,93 @@
       "pluginVersion": "9.4.7",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "$$hashKey": "object:653",
-              "fake": true,
-              "field": "source_ip_address.keyword",
-              "id": "6",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "1000"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:654",
-              "fake": true,
-              "field": "source_reverse_dns.keyword",
-              "id": "7",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "1000"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:655",
-              "fake": true,
-              "field": "source_base_domain.keyword",
-              "id": "8",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "1000"
-              },
-              "type": "terms"
-            },
-            {
-              "$$hashKey": "object:656",
-              "fake": true,
-              "field": "source_country.keyword",
-              "id": "9",
-              "settings": {
-                "min_doc_count": 1,
-                "missing": "-",
-                "order": "desc",
-                "orderBy": "_count",
-                "size": "1000"
-              },
-              "type": "terms"
-            }
-          ],
+          "dataset": "dmarc",
           "datasource": {
-            "uid": "$datasourcefo"
+            "type": "mysql",
+            "uid": "LwPYaoEVk"
           },
+          "editorMode": "builder",
+          "format": "table",
           "hide": false,
-          "metrics": [
-            {
-              "$$hashKey": "object:651",
-              "field": "message_count",
-              "id": "4",
-              "meta": {},
-              "settings": {},
-              "type": "count"
-            }
-          ],
-          "query": "domain.keyword:$fromdomain",
+          "rawSql": "SELECT source_ip AS \"IP Address\", reported_domain AS \"Base Domain\", source_country AS \"Country\", COUNT(feedback_type) AS \"Messages\" FROM dmarc.ruf GROUP BY source_ip, reported_domain, source_country ORDER BY COUNT(feedback_type) DESC ",
           "refId": "A",
-          "timeField": "arrival_date"
+          "sql": {
+            "columns": [
+              {
+                "alias": "\"IP Address\"",
+                "parameters": [
+                  {
+                    "name": "source_ip",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Base Domain\"",
+                "parameters": [
+                  {
+                    "name": "reported_domain",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Country\"",
+                "parameters": [
+                  {
+                    "name": "source_country",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              },
+              {
+                "alias": "\"Messages\"",
+                "name": "COUNT",
+                "parameters": [
+                  {
+                    "name": "feedback_type",
+                    "type": "functionParameter"
+                  }
+                ],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "name": "source_ip",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "reported_domain",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              },
+              {
+                "property": {
+                  "name": "source_country",
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "orderBy": {
+              "property": {
+                "name": "COUNT(feedback_type)",
+                "type": "string"
+              },
+              "type": "property"
+            },
+            "orderByDirection": "DESC"
+          },
+          "table": "ruf"
         }
       ],
       "title": "Top 1000 Forensic Sample Source IP Addresses",
@@ -5106,22 +5125,11 @@
         "auto": false,
         "auto_count": 30,
         "auto_min": "10s",
-        "current": {
-          "selected": false,
-          "text": "1d",
-          "value": "1d"
-        },
-        "hide": 2,
-        "label": "Interval",
+        "current": {},
+        "hide": 0,
         "name": "interval",
-        "options": [
-          {
-            "selected": true,
-            "text": "1d",
-            "value": "1d"
-          }
-        ],
-        "query": "1d",
+        "options": [],
+        "query": "1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
@@ -5160,6 +5168,6 @@
   "timezone": "",
   "title": "DMARC Reports",
   "uid": "SDksirRWz",
-  "version": 91,
+  "version": 165,
   "weekStart": ""
 }
