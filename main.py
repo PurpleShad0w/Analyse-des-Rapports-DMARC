@@ -32,7 +32,7 @@ config = vars(args)
 
 os.chdir(os.path.dirname(sys.argv[0]))
 
-with open('user.txt', 'r') as file:
+with open('root.txt', 'r') as file:
     user, pwd = file.read().split('\n')
 
 path_rua = "home/shared/DMARC/altair.ac6.fr/rua/"
@@ -226,43 +226,48 @@ insert_ruf = """
     """
 
 
-def unzip(email, path_in, path_out, overwrite = False):
+def unzip(email, path_in, path_out, overwrite = False, full_path = False):
     unzip = False
+    if not full_path:
+        file_path = path_in + email
+        output_path = path_out + email
+    else:
+        file_path = email
+        output_path = path_out + email.rsplit('/', 1)[1]
 
     if email.endswith('.bz2'):
-        new_mail = email.replace('.bz2', '')
-        with open(path_in + email, 'rb') as file, open(path_out + new_mail, 'wb') as new_file:
+        output_path = output_path.replace('.bz2', '')
+        with open(file_path, 'rb') as file, open(output_path, 'wb') as new_file:
             for data in iter(lambda : file.read(100 * 1024), b''):
                 new_file.write(decompressor.decompress(data))
                 unzip = True
 
     if email.endswith('.gz'):
-        new_mail = email.replace('.gz', '')
-        with gzip.open(path_in + email) as f, open(path_out + new_mail, 'wb') as fout:
+        output_path = output_path.replace('.gz', '')
+        with gzip.open(file_path) as f, open(output_path, 'wb') as fout:
             file_content = f.read()
             fout.write(file_content)
             unzip = True
 
     if email.endswith('.xz'):
-        new_mail = email.replace('.xz', '')
-        with lzma.open(path_in + email) as f, open(path_out + new_mail, 'wb') as fout:
+        output_path = output_path.replace('.xz', '')
+        with lzma.open(file_path) as f, open(output_path, 'wb') as fout:
             file_content = f.read()
             fout.write(file_content)
             unzip = True
     
     if email.endswith('.zip'):
-        new_mail = email.replace('.zip', '')
-        with zipfile.ZipFile(path_in + email, 'r') as fzip:
+        with zipfile.ZipFile(file_path, 'r') as fzip:
             fzip.extractall(path_out)
             unzip = True
 
     if not unzip:
-        with open(path_in + email, 'rb') as f, open(path_out + email, 'wb') as fout:
+        with open(file_path, 'rb') as f, open(output_path, 'wb') as fout:
             file_content = f.read()
             fout.write(file_content)
 
     if overwrite and not email.endswith('.mail'):
-        os.remove(path_in + email)
+        os.remove(file_path)
 
 
 def get_attachment(email, path_mail, path_report, path_attachment):
@@ -297,11 +302,9 @@ def get_attachment(email, path_mail, path_report, path_attachment):
             f.write(data)
 
 
-def gather_rua(path_rua, path_mail, path_report, path_attachment):
-    emails = os.listdir(path_rua)
-    
-    for email in emails:
-        unzip(email, path_rua, path_mail)
+def gather_rua(path_emails, path_mail, path_report, path_attachment):
+    for email in path_emails:
+        unzip(email, path_rua, path_mail, full_path=True)
     
     emails = os.listdir(path_mail)
     
@@ -441,11 +444,9 @@ def gather_rua(path_rua, path_mail, path_report, path_attachment):
     return reports_data
 
 
-def gather_ruf(path_ruf, path_mail, path_report, path_attachment):
-    emails = os.listdir(path_ruf)
-    
-    for email in emails:
-        unzip(email, path_ruf, path_mail)
+def gather_ruf(path_emails, path_mail, path_report, path_attachment):
+    for email in path_emails:
+        unzip(email, path_ruf, path_mail, full_path=True)
     
     emails = os.listdir(path_mail)
     
@@ -520,66 +521,94 @@ def initialization(show = False):
     mycursor.execute(initialize_ruf)
     mydb.commit()
 
-    years = os.listdir(path_rua)
-    for year in years:
-        months = os.listdir(path_rua + '/' + year)
-        for month in months:
-            path_emails = path_rua + '/' + year + '/' + month + '/'
-            reports_data = gather_rua(path_emails, path_mail_rua, path_report_rua, path_attachment_rua)
-            mycursor.execute('SELECT MAX(record_id) FROM DMARC.RUA')
-            max_id = mycursor.fetchone()[0]
-            if max_id == None:
-                max_id = 0
-
-            data, id = [], max_id + 1
-            for report in reports_data:
-                entry = list(report.values())
-                entry.insert(0, id)
-                id += 1
-                data.append(tuple(entry))
-
-            mycursor.executemany(insert_rua, data)
-            mydb.commit()
+    path_emails, last_file = [], ''
+    for path, subdirs, files in os.walk(path_rua):
+        for name in files:
+            last_file = os.path.join(path, name).replace("\\","/")
+            path_emails.append(last_file)
     
-    years = os.listdir(path_ruf)
-    for year in years:
-        months = os.listdir(path_ruf + '/' + year)
-        for month in months:
-            path_emails = path_ruf + '/' + year + '/' + month + '/'
-            reports_data = gather_ruf(path_emails, path_mail_ruf, path_report_ruf, path_attachment_ruf)
-            mycursor.execute('SELECT MAX(record_id) FROM DMARC.RUA')
-            max_id = mycursor.fetchone()[0]
-            if max_id == None:
-                max_id = 0
+    last_rua = [last_file, os.stat(last_file).st_size]
+    last_file = None
 
-            data, id = [], max_id + 1
-            for report in reports_data:
-                entry = list(report.values())
-                entry.insert(0, id)
-                id += 1
-                data.append(tuple(entry))
+    path_emails.sort(key=lambda x: os.path.getmtime(x))
+    reports_data = gather_rua(path_emails, path_mail_rua, path_report_rua, path_attachment_rua)
+    mycursor.execute('SELECT MAX(record_id) FROM DMARC.RUA')
+    max_id = mycursor.fetchone()[0]
+    if max_id == None:
+        max_id = 0
 
-            mycursor.executemany(insert_ruf, data)
-            mydb.commit()
+    data, id = [], max_id + 1
+    for report in reports_data:
+        entry = list(report.values())
+        entry.insert(0, id)
+        id += 1
+        data.append(tuple(entry))
+
+    mycursor.executemany(insert_rua, data)
+    mydb.commit()
     
+    path_emails = []
+    for path, subdirs, files in os.walk(path_rua):
+        for name in files:
+            last_file = os.path.join(path, name).replace("\\","/")
+            path_emails.append(last_file)
+    
+    if not last_file == None:
+        last_ruf = [last_file, os.stat(last_file).st_size]
+    else:
+        last_ruf = ['None', 'None']
+    
+    path_emails.sort(key=lambda x: os.path.getmtime(x))
+    reports_data = gather_ruf(path_emails, path_mail_ruf, path_report_ruf, path_attachment_ruf)
+    mycursor.execute('SELECT MAX(record_id) FROM DMARC.RUF')
+    max_id = mycursor.fetchone()[0]
+    if max_id == None:
+        max_id = 0
+
+    data, id = [], max_id + 1
+    for report in reports_data:
+        entry = list(report.values())
+        entry.insert(0, id)
+        id += 1
+        data.append(tuple(entry))
+
+    mycursor.executemany(insert_ruf, data)
+    mydb.commit()
     mydb.close()
+
+    with open('last.txt', 'w') as f:
+        f.write('Last RUA name: ' + last_rua[0] + '\nLast RUA size: ' + str(last_rua[1]) + '\nLast RUF name: ' + last_ruf[0] + '\nLast RUF size: ' + str(last_ruf[1]))
+
     update_dashboard(show)
 
 
-def daily(show = False):
+def execution(show = False):
     mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='DMARC')
     mycursor = mydb.cursor(buffered=True)
 
-    year = datetime.now().year
-    month = datetime.now().month
+    path_emails = []
+    for path, subdirs, files in os.walk(path_rua):
+        for name in files:
+            last_file = os.path.join(path, name).replace("\\","/")
+            path_emails.append(last_file)
 
-    if len(str(month)) == 1:
-        month = "0" + str(month)
-    
-    current_rua = path_rua + str(year) + "/" + str(month) + "/"
-    current_ruf = path_ruf + str(year) + "/" + str(month) + "/"
+    path_emails.sort(key=lambda x: os.path.getmtime(x))
 
-    reports_data = gather_rua(current_rua, path_mail_rua, path_report_rua, path_attachment_rua)
+    with open('last.txt', 'r') as f:
+        content = f.read()
+        last_rua = re.search('Last RUA name: (.*)\n', content).group(1)
+        last_rua_size = re.search('Last RUA size: (.*)\n', content).group(1)
+
+    if last_rua in path_emails:
+        # NOTHING GOES THROUGH HERE, NEEDS FIXING
+        path_emails = path_emails[path_emails.index(last_rua)+1:]
+        if str(os.stat(last_rua).st_size) == last_rua_size:
+            path_emails.pop(0)
+
+    last_rua = [last_file, os.stat(last_file).st_size]
+    last_file = None
+
+    reports_data = gather_rua(path_emails, path_mail_rua, path_report_rua, path_attachment_rua)
     mycursor.execute('SELECT MAX(record_id) FROM DMARC.RUA')
     max_id = mycursor.fetchone()[0]
     if max_id == None:
@@ -595,8 +624,34 @@ def daily(show = False):
     mycursor.executemany(insert_rua, data)
     mydb.commit()
 
-    reports_data = gather_ruf(current_ruf, path_mail_ruf, path_report_ruf, path_attachment_ruf)
-    mycursor.execute('SELECT MAX(record_id) FROM DMARC.RUA')
+    path_emails = []
+    for path, subdirs, files in os.walk(path_ruf):
+        for name in files:
+            last_file = os.path.join(path, name).replace("\\","/")
+            path_emails.append(last_file)
+
+    path_emails.sort(key=lambda x: os.path.getmtime(x))
+
+    with open('last.txt', 'r') as f:
+        content = f.read()
+        try:
+            last_ruf = re.search('Last RUF name: (.*)\n', content).group(1)
+            last_ruf_size = re.search('Last RUF size: (.*)\n', content).group(1)
+        except (AttributeError, IndexError) as error:
+            last_ruf = ''
+
+    if last_ruf in path_emails:
+        path_emails = path_emails[path_emails.index(last_ruf)+1:]
+        if str(os.stat(last_ruf).st_size) == last_ruf_size:
+            path_emails.pop(0)
+
+    if not last_file == None:
+        last_ruf = [last_file, os.stat(last_file).st_size]
+    else:
+        last_ruf = ['None', 'None']
+
+    reports_data = gather_ruf(path_emails, path_mail_ruf, path_report_ruf, path_attachment_ruf)
+    mycursor.execute('SELECT MAX(record_id) FROM DMARC.RUF')
     max_id = mycursor.fetchone()[0]
     if max_id == None:
         max_id = 0
@@ -618,6 +673,10 @@ def daily(show = False):
         print(database)
     
     mydb.close()
+
+    with open('last.txt', 'w') as f:
+        f.write('Last RUA name: ' + last_rua[0] + '\nLast RUA size: ' + str(last_rua[1]) + '\nLast RUF name: ' + last_ruf[0] + '\nLast RUF size: ' + str(last_ruf[1]))
+
     update_dashboard(show)
 
 
@@ -625,4 +684,4 @@ def daily(show = False):
 if config['init']:
     initialization(config['show'])
 else:
-    daily(config['show'])
+    execution(config['show'])
