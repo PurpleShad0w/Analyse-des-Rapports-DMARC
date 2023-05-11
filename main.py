@@ -1,25 +1,27 @@
-import os
-import sys
+import argparse
+from bz2 import BZ2Decompressor
 from datetime import datetime
 from email import policy
 from email.parser import BytesParser
 from email.message import EmailMessage
-from bz2 import BZ2Decompressor
-import lzma
-import gzip
-import zipfile
-import xml.etree.ElementTree as ET
-import socket
 from geolite2 import geolite2
-import tldextract
-import mysql.connector
-import pandas as pd
 from grafana_client import GrafanaApi
 from grafana_client.util import setup_logging
+from grafanalib._gen import DashboardEncoder
+from grafanalib.core import Dashboard
+import gzip
 import json
 import logging
-import argparse
+import lzma
+import mysql.connector
+import os
+import pandas as pd
 import re
+import socket
+import sys
+import tldextract
+import xml.etree.ElementTree as ET
+import zipfile
 
 parser = argparse.ArgumentParser(description="DMARC Analyser",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -35,8 +37,8 @@ os.chdir(os.path.dirname(sys.argv[0]))
 with open('root.txt', 'r') as file:
     user, pwd = file.read().split('\n')
 
-path_rua = "home/shared/DMARC/altair.ac6.fr/rua/"
-path_ruf = "home/shared/DMARC/altair.ac6.fr/ruf/"
+path_rua = "altair.ac6.fr/rua/"
+path_ruf = "altair.ac6.fr/ruf/"
 path_mail_rua = "dmarc-reports/rua/mail/"
 path_mail_ruf = "dmarc-reports/ruf/mail/"
 path_attachment_rua = "dmarc-reports/rua/attachment/"
@@ -490,6 +492,17 @@ def gather_ruf(path_emails, path_mail, path_report, path_attachment):
     return reports_data
 
 
+def init_dashboard():
+    dashboard = Dashboard(uid='SDksirRWz', title='DMARC Reports')
+    data = {
+        "dashboard": json.loads(json.dumps(dashboard, sort_keys=True, cls=DashboardEncoder)),
+        "overwrite": True,
+        "message": '',
+    }
+    GrafanaApi.from_env()
+    grafana_client.dashboard.update_dashboard(data)
+
+
 def update_dashboard(show = False):
     with open('report.json', 'r', encoding='utf-8') as f:
         template = json.loads(f.read())
@@ -497,7 +510,8 @@ def update_dashboard(show = False):
     dashboard = {
         "dashboard": template,
         "overwrite": True,
-        "message": "Updated via GrafanaLib",
+        "message": "Updated via Script",
+        "uid": "SDksirRWz",
     }
     
     response = grafana_client.dashboard.update_dashboard(dashboard)
@@ -589,6 +603,7 @@ def initialization(show = False):
     for file in path_cleanup:
         os.remove(file)
 
+    init_dashboard()
     update_dashboard(show)
 
 
@@ -645,7 +660,10 @@ def execution(show = False):
             path_emails.append(os.path.join(path, name).replace("\\","/"))
 
     path_emails.sort(key=lambda x: os.path.getmtime(x))
-    last_file = path_emails[-1]
+    try:
+        last_file = path_emails[-1]
+    except IndexError:
+        last_file = None
 
     with open('last.txt', 'r') as f:
         content = f.read()
