@@ -18,7 +18,6 @@ import os
 import pandas as pd
 import re
 import socket
-import sys
 import tldextract
 import xml.etree.ElementTree as ET
 import zipfile
@@ -31,8 +30,6 @@ parser.add_argument("-s", "--show", action="store_true", help="show the database
 
 args = parser.parse_args()
 config = vars(args)
-
-os.chdir(os.path.dirname(sys.argv[0]))
 
 with open('root.txt', 'r') as file:
     user, pwd = file.read().split('\n')
@@ -562,12 +559,17 @@ def initialization(show = False):
     mydb.commit()
     
     path_emails = []
-    for path, subdirs, files in os.walk(path_rua):
+    for path, subdirs, files in os.walk(path_ruf):
         for name in files:
             path_emails.append(os.path.join(path, name).replace("\\","/"))
     
     path_emails.sort(key=lambda x: os.path.getmtime(x))
-    last_file = path_emails[-1]
+
+    try:
+        last_file = path_emails[-1]
+    except IndexError:
+        last_file = None
+
     if not last_file == None:
         last_ruf = [last_file, os.stat(last_file).st_size]
     else:

@@ -108,7 +108,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT SUM(spf_aligned_w) AS \"True\", SUM(spf_unaligned) AS \"False\" FROM dmarc.rua LIMIT 50 ",
+          "rawSql": "SELECT SUM(spf_aligned_w) AS \"True\", SUM(spf_unaligned) AS \"False\" FROM DMARC.RUA LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -210,7 +210,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT SUM(dkim_aligned_w) AS \"True\", SUM(dkim_unaligned) AS \"False\" FROM dmarc.rua LIMIT 50 ",
+          "rawSql": "SELECT SUM(dkim_aligned_w) AS \"True\", SUM(dkim_unaligned) AS \"False\" FROM DMARC.RUA LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -312,7 +312,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT SUM(dmarc_aligned_w) AS \"True\", SUM(dmarc_unaligned) AS \"False\" FROM dmarc.rua LIMIT 50 ",
+          "rawSql": "SELECT SUM(dmarc_aligned_w) AS \"True\", SUM(dmarc_unaligned) AS \"False\" FROM DMARC.RUA LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -600,7 +600,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT time, SUM(spf_pass) AS \"Pass\", SUM(spf_fail) AS \"Fail\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
+          "rawSql": "SELECT time, SUM(spf_pass) AS \"Pass\", SUM(spf_fail) AS \"Fail\" FROM DMARC.RUA GROUP BY time LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -877,7 +877,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT time, SUM(dkim_pass) AS \"Pass\", SUM(dkim_fail) AS \"Fail\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
+          "rawSql": "SELECT time, SUM(dkim_pass) AS \"Pass\", SUM(dkim_fail) AS \"Fail\" FROM DMARC.RUA GROUP BY time LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1049,7 +1049,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT SUM(spf_aligned) AS \"True\", time, SUM(spf_unaligned) AS \"False\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
+          "rawSql": "SELECT SUM(spf_aligned) AS \"True\", time, SUM(spf_unaligned) AS \"False\" FROM DMARC.RUA GROUP BY time LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1221,7 +1221,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT SUM(dkim_aligned) AS \"True\", time, SUM(dkim_unaligned) AS \"False\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
+          "rawSql": "SELECT SUM(dkim_aligned) AS \"True\", time, SUM(dkim_unaligned) AS \"False\" FROM DMARC.RUA GROUP BY time LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1393,7 +1393,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT SUM(dmarc_aligned) AS \"True\", time, SUM(dkim_unaligned) AS \"False\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
+          "rawSql": "SELECT SUM(dmarc_aligned) AS \"True\", time, SUM(dkim_unaligned) AS \"False\" FROM DMARC.RUA GROUP BY time LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1580,7 +1580,7 @@
           "editorMode": "builder",
           "format": "time_series",
           "hide": false,
-          "rawSql": "SELECT time, SUM(dispo_none) AS \"None\", SUM(dispo_quarantine) AS \"Quarantine\", SUM(dispo_reject) AS \"Reject\" FROM dmarc.rua GROUP BY time LIMIT 50 ",
+          "rawSql": "SELECT time, SUM(dispo_none) AS \"None\", SUM(dispo_quarantine) AS \"Quarantine\", SUM(dispo_reject) AS \"Reject\" FROM DMARC.RUA GROUP BY time LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1734,7 +1734,7 @@
             }
           ],
           "query": "",
-          "rawSql": "SELECT SUM(count) FROM dmarc.rua LIMIT 50 ",
+          "rawSql": "SELECT SUM(count) FROM DMARC.RUA LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -1857,7 +1857,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY source_base_domain ORDER BY SUM(count) DESC LIMIT 2000 ",
+          "rawSql": "SELECT source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY source_base_domain ORDER BY SUM(count) DESC LIMIT 2000 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -2031,7 +2031,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT org_name AS \"Reporting Organisation\", org_extra_contact_info AS \"Org Contact Info\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY org_name, org_extra_contact_info ORDER BY SUM(count) DESC ",
+          "rawSql": "SELECT org_name AS \"Reporting Organisation\", org_extra_contact_info AS \"Org Contact Info\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY org_name, org_extra_contact_info ORDER BY SUM(count) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -2210,7 +2210,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT header_from AS \"Header From\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY header_from ORDER BY SUM(count) DESC ",
+          "rawSql": "SELECT header_from AS \"Header From\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY header_from ORDER BY SUM(count) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -2393,7 +2393,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT SUM(count), source_country, lat, lon FROM dmarc.rua GROUP BY source_country, lat, lon LIMIT 50 ",
+          "rawSql": "SELECT SUM(count), source_country, lat, lon FROM DMARC.RUA GROUP BY source_country, lat, lon LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -2571,7 +2571,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_country AS \"Country\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY source_country ORDER BY SUM(count) DESC ",
+          "rawSql": "SELECT source_country AS \"Country\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY source_country ORDER BY SUM(count) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -2856,7 +2856,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_base_domain AS \"Sending Domain\", source_reverse_dns AS \"PTR\", source_ip_address AS \"Source IP\", source_country AS \"Country\", disposition AS \"Disposition\", spf_aligned AS \"SPF\", dkim_aligned AS \"DKIM\", org_name AS \"Reporter\", spf_result AS \"SPF Auth Result\", dkim_result AS \"DKIM Auth Result\", domain AS \"Email Domain\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY source_base_domain, source_reverse_dns, source_ip_address, source_country, disposition, spf_aligned, dkim_aligned, org_name, spf_result, dkim_result, domain ORDER BY SUM(count) DESC ",
+          "rawSql": "SELECT source_base_domain AS \"Sending Domain\", source_reverse_dns AS \"PTR\", source_ip_address AS \"Source IP\", source_country AS \"Country\", disposition AS \"Disposition\", spf_aligned AS \"SPF\", dkim_aligned AS \"DKIM\", org_name AS \"Reporter\", spf_result AS \"SPF Auth Result\", dkim_result AS \"DKIM Auth Result\", domain AS \"Email Domain\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY source_base_domain, source_reverse_dns, source_ip_address, source_country, disposition, spf_aligned, dkim_aligned, org_name, spf_result, dkim_result, domain ORDER BY SUM(count) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -3330,7 +3330,7 @@
           "format": "table",
           "hide": false,
           "rawQuery": true,
-          "rawSql": "SELECT domain AS \"Domain\", adkim AS \"DKIM Policy\", aspf AS \"SPF Policy\", sp AS \"Forensic Policy\", p AS \"Policy\", pct AS \"Percentage\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY domain, adkim, aspf, sp, p, pct ORDER BY SUM(count) DESC",
+          "rawSql": "SELECT domain AS \"Domain\", adkim AS \"DKIM Policy\", aspf AS \"SPF Policy\", sp AS \"Forensic Policy\", p AS \"Policy\", pct AS \"Percentage\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY domain, adkim, aspf, sp, p, pct ORDER BY SUM(count) DESC",
           "refId": "A",
           "sql": {
             "columns": [
@@ -3549,7 +3549,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_ip_address AS \"IP Address\", source_reverse_dns AS \"Reverse DNS\", source_base_domain AS \"Base Domain\", source_country AS \"Country\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY source_ip_address, source_reverse_dns, source_base_domain, source_country ORDER BY SUM(count) DESC LIMIT 1000 ",
+          "rawSql": "SELECT source_ip_address AS \"IP Address\", source_reverse_dns AS \"Reverse DNS\", source_base_domain AS \"Base Domain\", source_country AS \"Country\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY source_ip_address, source_reverse_dns, source_base_domain, source_country ORDER BY SUM(count) DESC LIMIT 1000 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -3773,7 +3773,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT header_from AS \"Header From\", envelope_from AS \"Envelope From\", spf_result AS \"SPF Result\", spf_aligned AS \"SPF Aligned\", source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY header_from, envelope_from, spf_result, spf_aligned, source_base_domain ORDER BY SUM(count) DESC ",
+          "rawSql": "SELECT header_from AS \"Header From\", envelope_from AS \"Envelope From\", spf_result AS \"SPF Result\", spf_aligned AS \"SPF Aligned\", source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY header_from, envelope_from, spf_result, spf_aligned, source_base_domain ORDER BY SUM(count) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -4026,7 +4026,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT header_from AS \"Header From\", dkim_selector AS \"DKIM Selector\", dkim_domain AS \"DKIM Domain\", dkim_result AS \"DKIM Result\", dkim_aligned AS \"DKIM Aligned\", source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM dmarc.rua GROUP BY header_from, dkim_selector, dkim_domain, dkim_result, dkim_aligned, source_base_domain ORDER BY SUM(count) DESC ",
+          "rawSql": "SELECT header_from AS \"Header From\", dkim_selector AS \"DKIM Selector\", dkim_domain AS \"DKIM Domain\", dkim_result AS \"DKIM Result\", dkim_aligned AS \"DKIM Aligned\", source_base_domain AS \"Reverse DNS Base\", SUM(count) AS \"Messages\" FROM DMARC.RUA GROUP BY header_from, dkim_selector, dkim_domain, dkim_result, dkim_aligned, source_base_domain ORDER BY SUM(count) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -4347,7 +4347,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT arrival_date AS \"Arrival Date\", auth_failure AS \"Auth Failure\", delivery_result AS \"Delivery Result\", original_from AS \"Original From\", original_to AS \"Original To\", COUNT(feedback_type) AS \"Messages\" FROM dmarc.ruf GROUP BY arrival_date, auth_failure, delivery_result, original_from, original_to ORDER BY COUNT(feedback_type) DESC ",
+          "rawSql": "SELECT arrival_date AS \"Arrival Date\", auth_failure AS \"Auth Failure\", delivery_result AS \"Delivery Result\", original_from AS \"Original From\", original_to AS \"Original To\", COUNT(feedback_type) AS \"Messages\" FROM DMARC.RUF GROUP BY arrival_date, auth_failure, delivery_result, original_from, original_to ORDER BY COUNT(feedback_type) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -4604,7 +4604,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT COUNT(feedback_type), source_country, lat, lon FROM dmarc.ruf GROUP BY source_country, lat, lon LIMIT 50 ",
+          "rawSql": "SELECT COUNT(feedback_type), source_country, lat, lon FROM DMARC.RUF GROUP BY source_country, lat, lon LIMIT 50 ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -4782,7 +4782,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_country AS \"Country\", COUNT(feedback_type) AS \"Messages\" FROM dmarc.ruf GROUP BY source_country ORDER BY COUNT(feedback_type) DESC ",
+          "rawSql": "SELECT source_country AS \"Country\", COUNT(feedback_type) AS \"Messages\" FROM DMARC.RUF GROUP BY source_country ORDER BY COUNT(feedback_type) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
@@ -4954,7 +4954,7 @@
           "editorMode": "builder",
           "format": "table",
           "hide": false,
-          "rawSql": "SELECT source_ip AS \"IP Address\", reported_domain AS \"Base Domain\", source_country AS \"Country\", COUNT(feedback_type) AS \"Messages\" FROM dmarc.ruf GROUP BY source_ip, reported_domain, source_country ORDER BY COUNT(feedback_type) DESC ",
+          "rawSql": "SELECT source_ip AS \"IP Address\", reported_domain AS \"Base Domain\", source_country AS \"Country\", COUNT(feedback_type) AS \"Messages\" FROM DMARC.RUF GROUP BY source_ip, reported_domain, source_country ORDER BY COUNT(feedback_type) DESC ",
           "refId": "A",
           "sql": {
             "columns": [
