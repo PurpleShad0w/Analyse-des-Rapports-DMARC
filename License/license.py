@@ -1,30 +1,13 @@
-import argparse
 import mysql.connector
+import uuid
+import tkinter
+import tkinter.messagebox
+import webbrowser
+import psutil
 
-parser = argparse.ArgumentParser(description="License Checker",
-                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-
-parser.add_argument("-i", "--init", action="store_true", help="create brand new MySQL database")
-parser.add_argument("-m", "--mac", action='store', help="MAC address to lookup")
-
-args = parser.parse_args()
-config = vars(args)
 
 with open('root.txt', 'r') as file:
     user, pwd = file.read().split('\n')
-
-create_db = """
-    CREATE TABLE LICENSES (
-    record_id INTEGER,
-    mac_address VARCHAR(255),
-    client_name VARCHAR(255),
-    client_email VARCHAR(255),
-    license_type VARCHAR(255),
-    license_features VARCHAR(255),
-    expires VARCHAR(255),
-    currently_effective BOOLEAN,
-    PRIMARY KEY (record_id))
-    """
 
 get_status = """
     SELECT currently_effective
@@ -32,37 +15,43 @@ get_status = """
     WHERE mac_address = %s
     """
 
-def create_database():
-    mydb = mysql.connector.connect(host="localhost", user=user, password=pwd)
-    mycursor = mydb.cursor(buffered=True)
-    mycursor.execute('CREATE DATABASE LICENSE')
-    mydb.close()
-
-    mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='LICENSE')
-    mycursor = mydb.cursor(buffered=True)
-
-    mycursor.execute(create_db)
-    mydb.commit()
+try:
+    mac_num = hex(uuid.getnode()).replace('0x', '').upper()
+    mac = '-'.join(mac_num[i : i + 2] for i in range(0, 11, 2))
+except:
+    mac = ''
 
 
-def check_license(mac_address):
-    mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='LICENSE')
-    mycursor = mydb.cursor(buffered=True)
+def kill_eclipse():
+    for proc in psutil.process_iter():
+                if proc.name() == 'eclipse.exe':
+                    proc.kill()
+                    print('Closing System Workbench...')
 
-    mycursor.execute(get_status, list([mac_address]))
-    status = 0
-    try:
-        status = mycursor.fetchone()[0]
-    except TypeError:
-        print('Unknown MAC Address')
 
-    if status == 1:
-        print('Valid License')
+mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='LICENSE')
+mycursor = mydb.cursor(buffered=True)
+
+mycursor.execute(get_status, list([mac]))
+status = -1
+try:
+    status = mycursor.fetchone()[0]
+except TypeError:
+    choice = tkinter.messagebox.askquestion('Unknown MAC Address','This MAC address is not registered with a license.\nWould you like to create an account ?')
+    if choice == 'yes':
+        webbrowser.open('https://www.openstm32.org/tiki-register.php')
+        kill_eclipse()
     else:
-        print('Invalid License')
+        kill_eclipse()
 
-
-if config['init']:
-    create_database()
+if status == 1:
+    pass
+elif status == 0:
+    choice = tkinter.messagebox.askquestion('Invalid License','The license associated with this MAC address is expired.\nWould you like to renew your license ?')
+    if choice == 'yes':
+        webbrowser.open('https://www.openstm32.org/tiki-login_scr.php')
+        kill_eclipse()
+    else:
+        kill_eclipse()
 else:
-    check_license(config['mac'])
+    tkinter.messagebox.showinfo('Error','The MAC address of this computer could not be found.')
