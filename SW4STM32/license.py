@@ -3,7 +3,8 @@ import uuid
 import tkinter
 import tkinter.messagebox
 import webbrowser
-import psutil
+import os
+import sys
 
 
 with open('root.txt', 'r') as file:
@@ -15,19 +16,14 @@ get_status = """
     WHERE mac_address = %s
     """
 
+url_register = 'https://www.openstm32.org/tiki-register.php'
+url_login = 'https://www.openstm32.org/tiki-login_scr.php'
+
 try:
     mac_num = hex(uuid.getnode()).replace('0x', '').upper()
     mac = '-'.join(mac_num[i : i + 2] for i in range(0, 11, 2))
 except:
     mac = ''
-
-
-def kill_eclipse():
-    for proc in psutil.process_iter():
-                if proc.name() == 'eclipse.exe':
-                    proc.kill()
-                    print('Closing System Workbench...')
-
 
 mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='LICENSE')
 mycursor = mydb.cursor(buffered=True)
@@ -39,19 +35,18 @@ try:
 except TypeError:
     choice = tkinter.messagebox.askquestion('Unknown MAC Address','This MAC address is not registered with a license.\nWould you like to create an account ?')
     if choice == 'yes':
-        webbrowser.open('https://www.openstm32.org/tiki-register.php')
-        kill_eclipse()
-    else:
-        kill_eclipse()
+        webbrowser.open(url_register)
+        # this prevents the program from stopping somehow
+    sys.exit('Software Did Not Launch')
 
 if status == 1:
-    pass
+    # need command to launch SW4STM32 on any platform (linux mainly)
+    os.startfile('SW4STM32\eclipse.exe.lnk')
+    sys.exit('Software Launched')
 elif status == 0:
     choice = tkinter.messagebox.askquestion('Invalid License','The license associated with this MAC address is expired.\nWould you like to renew your license ?')
     if choice == 'yes':
-        webbrowser.open('https://www.openstm32.org/tiki-login_scr.php')
-        kill_eclipse()
-    else:
-        kill_eclipse()
+        webbrowser.open(url_login)
+    sys.exit('Software Did Not Launch')
 else:
-    tkinter.messagebox.showinfo('Error','The MAC address of this computer could not be found.')
+    tkinter.messagebox.showinfo('Error','Unexpected result.')

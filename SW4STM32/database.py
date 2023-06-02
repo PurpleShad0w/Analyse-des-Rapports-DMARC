@@ -11,7 +11,7 @@ create_db = """
     client_email VARCHAR(255),
     license_type VARCHAR(255),
     license_features VARCHAR(255),
-    expires VARCHAR(255),
+    expires DATE,
     currently_effective BOOLEAN,
     PRIMARY KEY (record_id))
     """
