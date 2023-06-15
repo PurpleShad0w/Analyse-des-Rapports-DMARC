@@ -1,52 +1,72 @@
 import mysql.connector
 import uuid
-import tkinter
-import tkinter.messagebox
-import webbrowser
-import os
 import sys
+import datetime
+import tkinter.messagebox
 
 
 with open('root.txt', 'r') as file:
     user, pwd = file.read().split('\n')
 
-get_status = """
-    SELECT currently_effective
+with open('license.lic', 'r') as file:
+    licenses = file.read().split('\n')
+
+get_key = """
+    SELECT key_
     FROM license.licenses
-    WHERE mac_address = %s
+    WHERE mac = %s AND email = %s
     """
 
-url_register = 'https://www.openstm32.org/tiki-register.php'
-url_login = 'https://www.openstm32.org/tiki-login_scr.php'
+get_date = """
+    SELECT until
+    FROM license.licenses
+    WHERE mac = %s AND email = %s
+    """
+
 
 try:
     mac_num = hex(uuid.getnode()).replace('0x', '').upper()
     mac = '-'.join(mac_num[i : i + 2] for i in range(0, 11, 2))
 except:
-    mac = ''
+    sys.exit('no_mac')
 
 mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='LICENSE')
 mycursor = mydb.cursor(buffered=True)
 
-mycursor.execute(get_status, list([mac]))
-status = -1
-try:
-    status = mycursor.fetchone()[0]
-except TypeError:
-    choice = tkinter.messagebox.askquestion('Unknown MAC Address','This MAC address is not registered with a license.\nWould you like to create an account ?')
-    if choice == 'yes':
-        webbrowser.open(url_register)
-        # this prevents the program from stopping somehow
-    sys.exit('Software Did Not Launch')
+email = str(input('Please enter your registered email address\n'))
 
-if status == 1:
-    # need command to launch SW4STM32 on any platform (linux mainly)
-    os.startfile('SW4STM32\eclipse.exe.lnk')
-    sys.exit('Software Launched')
-elif status == 0:
-    choice = tkinter.messagebox.askquestion('Invalid License','The license associated with this MAC address is expired.\nWould you like to renew your license ?')
-    if choice == 'yes':
-        webbrowser.open(url_login)
-    sys.exit('Software Did Not Launch')
-else:
-    tkinter.messagebox.showinfo('Error','Unexpected result.')
+product = licenses[0]
+licenses.pop(0)
+
+for license in licenses:
+    data = license.split('#')
+    feature = data[0].replace('fr.ac6.feature.', '')
+    type = data[1].replace('type=', '')
+    until = data[2].replace('until=', '')
+    key = data[3].replace('key=', '')
+
+    mycursor.execute(get_key, [mac, email])
+    try:
+        db_key = mycursor.fetchone()[0]
+    except:
+        sys.exit('unknown_email')
+    
+    mycursor.execute(get_date, [mac, email])
+    try:
+        date = mycursor.fetchone()[0]
+    except:
+        sys.exit('no_date')
+
+    if key != db_key:
+        sys.exit('wrong_key')
+    
+    current = datetime.datetime.date(datetime.datetime.now())
+
+    if current <= date:
+        sys.exit('valid_license')
+    else:
+        choice = tkinter.messagebox.askquestion('Expired License','Would you like to renew your license ?')
+        if choice == 'yes':
+            next_month = current.replace(day = 28) + datetime.timedelta(days = 4)
+            last_day = next_month - datetime.timedelta(days = next_month.day)
+            print(last_day)

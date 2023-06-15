@@ -6,13 +6,12 @@ with open('root.txt', 'r') as file:
 create_db = """
     CREATE TABLE LICENSES (
     record_id INTEGER,
-    mac_address VARCHAR(255),
-    client_name VARCHAR(255),
-    client_email VARCHAR(255),
-    license_type VARCHAR(255),
-    license_features VARCHAR(255),
-    expires DATE,
-    currently_effective BOOLEAN,
+    mac VARCHAR(255),
+    email VARCHAR(255),
+    type VARCHAR(255),
+    feature VARCHAR(255),
+    until DATE,
+    key_ VARCHAR(255),
     PRIMARY KEY (record_id))
     """
 
