@@ -1,26 +1,45 @@
-import mysql.connector
-import uuid
-import sys
 import datetime
+import mysql.connector
+import sys
 import tkinter.messagebox
+import tkinter.simpledialog
+import uuid
 
 
 with open('root.txt', 'r') as file:
-    user, pwd = file.read().split('\n')
+    user, pwd, host = file.read().split('\n')
 
 with open('license.lic', 'r') as file:
     licenses = file.read().split('\n')
 
 get_key = """
     SELECT key_
-    FROM license.licenses
+    FROM LICENSE.LICENSES
     WHERE mac = %s AND email = %s
     """
 
 get_date = """
     SELECT until
-    FROM license.licenses
+    FROM LICENSE.LICENSES
     WHERE mac = %s AND email = %s
+    """
+
+get_mac = """
+    SELECT mac
+    FROM LICENSE.LICENSES
+    WHERE key_ = %s AND email = %s
+    """
+
+update_mac = [
+    "SET SQL_SAFE_UPDATES = 0;",
+    "UPDATE LICENSE.LICENSES SET mac = REPLACE(mac, %s, %s);",
+    "SET SQL_SAFE_UPDATES = 1;"
+    ]
+
+check_email = """
+    SELECT *
+    FROM LICENSE.LICENSES
+    WHERE email = %s
     """
 
 
@@ -30,10 +49,12 @@ try:
 except:
     sys.exit('no_mac')
 
-mydb = mysql.connector.connect(host="localhost", user=user, password=pwd, database='LICENSE')
+mydb = mysql.connector.connect(host=host, user=user, password=pwd, database='LICENSE')
 mycursor = mydb.cursor(buffered=True)
 
-email = str(input('Please enter your registered email address\n'))
+root = tkinter.Tk()
+root.wm_state('iconic')
+email = tkinter.simpledialog.askstring("Login", "Please enter your registered email address.")
 
 product = licenses[0]
 licenses.pop(0)
@@ -49,24 +70,43 @@ for license in licenses:
     try:
         db_key = mycursor.fetchone()[0]
     except:
-        sys.exit('unknown_email')
+        mycursor.execute(get_mac, [key, email])
+        try:
+            db_mac = mycursor.fetchone()[0]
+            choice = tkinter.messagebox.askyesno('Mismatched MAC address',"Would you like to switch the registered MAC address to this computer's ?")
+            if choice:
+                mycursor.execute(update_mac[0])
+                mycursor.execute(update_mac[1], [db_mac, mac])
+                mycursor.execute(update_mac[2])
+                mydb.commit()
+                sys.exit('update_acceptance') # LAUNCH
+            else:
+                sys.exit('update_refusal') # LAUNCH
+        except:
+            mycursor.execute(check_email, [email])
+            try:
+                mycursor.fetchone()[0]
+                tkinter.messagebox.showwarning('Incorrect Key','This license key is not associated with your account.')
+                sys.exit('incorrect_key') # DO NOT LAUNCH
+            except:
+                tkinter.messagebox.showwarning('Unknown Email','This email address is not associated with any account.')
+                sys.exit('unknown_email') # DO NOT LAUNCH
     
     mycursor.execute(get_date, [mac, email])
     try:
         date = mycursor.fetchone()[0]
     except:
-        sys.exit('no_date')
+        tkinter.messagebox.showwarning('No Date','Could not find a validation date for your license, please visit ac6.fr to reach support.')
+        sys.exit('no_date') # DO NOT LAUNCH
 
     if key != db_key:
-        sys.exit('wrong_key')
+        tkinter.messagebox.showwarning('Wrong Key','This license key is not associated with your account.')
+        sys.exit('wrong_key') # DO NOT LAUNCH
     
     current = datetime.datetime.date(datetime.datetime.now())
 
     if current <= date:
-        sys.exit('valid_license')
+        sys.exit('valid_license') # LAUNCH
     else:
-        choice = tkinter.messagebox.askquestion('Expired License','Would you like to renew your license ?')
-        if choice == 'yes':
-            next_month = current.replace(day = 28) + datetime.timedelta(days = 4)
-            last_day = next_month - datetime.timedelta(days = next_month.day)
-            print(last_day)
+        tkinter.messagebox.showwarning('Expired License','Please visit ac6.fr in order to renew your System Workbench license.')
+        sys.exit('expired_license') # DO NOT LAUNCH
