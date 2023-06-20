@@ -54,7 +54,14 @@ mycursor = mydb.cursor(buffered=True)
 
 root = tkinter.Tk()
 root.wm_state('iconic')
-email = tkinter.simpledialog.askstring("Login", "Please enter your registered email address.")
+
+try:
+    with open('email.txt', 'r') as file:
+        email = file.read()
+except:
+    email = tkinter.simpledialog.askstring("Login", "Please enter your registered email address.")
+    with open('email.txt', 'w') as file:
+        file.write(email)
 
 product = licenses[0]
 licenses.pop(0)
