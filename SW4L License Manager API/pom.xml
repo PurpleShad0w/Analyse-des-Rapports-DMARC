@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>fr.ac6</groupId>
 	<artifactId>api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>SW4L License Manager API</name>
 	<description>Placeholder</description>
 	<properties>
@@ -20,7 +20,7 @@
 		<dependency>
     		<groupId>org.springframework</groupId>
     		<artifactId>spring-tx</artifactId>
-    		<version>4.2.5.RELEASE</version>
+    		<version>6.0.10</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -41,9 +41,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-    		<groupId>org.hibernate.javax.persistence</groupId>
-    		<artifactId>hibernate-jpa-2.1-api</artifactId>
-    		<version>1.0.0.Final</version>
+    		<groupId>jakarta.persistence</groupId>
+    		<artifactId>jakarta.persistence-api</artifactId>
+    		<version>3.1.0</version>
 		</dependency>
 	</dependencies>
 

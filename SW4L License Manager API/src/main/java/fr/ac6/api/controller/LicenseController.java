@@ -30,21 +30,24 @@ public class LicenseController {
             return new ResponseEntity<License>(HttpStatus.NOT_FOUND);
         }
     }
+
     @PostMapping("/")
     public void add(@RequestBody License license) {
         licenseService.saveLicense(license);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody License license, @PathVariable Integer id) {
         try {
             License existLicense = licenseService.getLicense(id);
-            license.setRecord(id);
-            licenseService.saveLicense(license);
+            existLicense.setRecord(id);
+            licenseService.saveLicense(existLicense);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
 

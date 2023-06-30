@@ -1,6 +1,6 @@
 package fr.ac6.api.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "LICENSES")
