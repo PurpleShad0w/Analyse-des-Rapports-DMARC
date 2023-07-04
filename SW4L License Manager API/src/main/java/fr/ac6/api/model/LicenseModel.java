@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "LICENSES")
-public class License {
+public class LicenseModel {
     private int record;
     private String mac;
     private String email;
@@ -13,10 +13,10 @@ public class License {
     private String until;
     private String key;
 
-    public License() {
+    public LicenseModel() {
     }
 
-    public License(int record, String mac, String email, String type, String feature, String until, String key) {
+    public LicenseModel(int record, String mac, String email, String type, String feature, String until, String key) {
         this.record = record;
         this.mac = mac;
         this.email = email;
