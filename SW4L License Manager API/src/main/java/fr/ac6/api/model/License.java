@@ -1,10 +1,12 @@
 package fr.ac6.api.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "LICENSES")
-public class LicenseModel {
+public class License {
     private int record;
     private String mac;
     private String email;
@@ -13,10 +15,10 @@ public class LicenseModel {
     private String until;
     private String key;
 
-    public LicenseModel() {
+    public License() {
     }
 
-    public LicenseModel(int record, String mac, String email, String type, String feature, String until, String key) {
+    public License(int record, String mac, String email, String type, String feature, String until, String key) {
         this.record = record;
         this.mac = mac;
         this.email = email;

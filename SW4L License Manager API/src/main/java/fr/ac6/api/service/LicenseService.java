@@ -1,6 +1,6 @@
 package fr.ac6.api.service;
 
-import fr.ac6.api.model.LicenseModel;
+import fr.ac6.api.model.License;
 import fr.ac6.api.repository.LicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,15 +13,15 @@ import java.util.List;
 public class LicenseService {
     @Autowired
     private LicenseRepository licenseRepository;
-    public List<LicenseModel> listAllLicense() {
+    public List<License> listAllLicense() {
         return licenseRepository.findAll();
     }
 
-    public void saveLicense(LicenseModel license) {
+    public void saveLicense(License license) {
         licenseRepository.save(license);
     }
 
-    public LicenseModel getLicense(Integer id) {
+    public License getLicense(Integer id) {
         return licenseRepository.findById(id).get();
     }
 

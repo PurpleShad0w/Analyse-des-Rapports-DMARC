@@ -1,6 +1,7 @@
 package fr.ac6.api.controller;
 
-import fr.ac6.api.model.LicenseModel;
+import fr.ac6.api.model.License;
+import fr.ac6.api.repository.LicenseRepository;
 import fr.ac6.api.service.LicenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,17 +13,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping(path = "api/license", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api")
 public class LicenseController {
+
     @Autowired
-    LicenseService service;
+    LicenseRepository licenseRepository;
 
-    public LicenseController(LicenseService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public List<LicenseModel> listAllLicense() {
-        return service.listAllLicense();
+    @GetMapping("/licenses")
+    public List<License> listAllLicenses() {
+        return licenseRepository.findAll();
     }
 }

@@ -2,12 +2,14 @@ package fr.ac6.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-public class api {
+@EnableJpaAuditing
+public class API {
 
 	public static void main(String[] args) {
-		SpringApplication.run(api.class, args);
+		SpringApplication.run(API.class, args);
 	}
 
 }
