@@ -1,88 +1,122 @@
 package fr.ac6.api.model;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
+
 @Entity
+@Table(name = "licenses")
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "LICENSES")
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt", "validUntil"},
+        allowGetters = true)
 public class License {
-    private int record;
-    private String mac;
-    private String email;
-    private String type;
-    private String feature;
-    private String until;
-    private String key;
-
-    public License() {
-    }
-
-    public License(int record, String mac, String email, String type, String feature, String until, String key) {
-        this.record = record;
-        this.mac = mac;
-        this.email = email;
-        this.type = type;
-        this.feature = feature;
-        this.until = until;
-        this.key = key;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getRecord() {
-        return record;
+    private Long id;
+
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdAt;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @LastModifiedDate
+    private Date updatedAt;
+
+    @NotBlank
+    private String macAddress;
+
+    @NotBlank
+    private String emailAddress;
+
+    @NotBlank
+    private String licenseType;
+
+    @NotBlank
+    private String licenseFeature;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date validUntil;
+
+    @NotBlank
+    private String licenseKey;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setRecord(int record) {
-        this.record = record;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getMac() {
-        return mac;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setMac(String mac) {
-        this.mac = mac;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getEmail() {
-        return email;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public String getType() {
-        return type;
+    public String getMacAddress() {
+        return macAddress;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
     }
 
-    public String getFeature() {
-        return feature;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setFeature(String feature) {
-        this.feature = feature;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
-    public String getUntil() {
-        return until;
+    public String getLicenseType() {
+        return licenseType;
     }
 
-    public void setUntil(String until) {
-        this.until = until;
+    public void setLicenseType(String licenseType) {
+        this.licenseType = licenseType;
     }
 
-    public String getKey() {
-        return key;
+    public String getLicenseFeature() {
+        return licenseFeature;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setLicenseFeature(String licenseFeature) {
+        this.licenseFeature = licenseFeature;
+    }
+
+    public Date getValidUntil() {
+        return validUntil;
+    }
+
+    public void setValidUntil(Date validUntil) {
+        this.validUntil = validUntil;
+    }
+
+    public String getLicenseKey() {
+        return licenseKey;
+    }
+
+    public void setLicenseKey(String licenseKey) {
+        this.licenseKey = licenseKey;
     }
 }
