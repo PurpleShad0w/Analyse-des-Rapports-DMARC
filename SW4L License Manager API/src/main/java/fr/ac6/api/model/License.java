@@ -1,8 +1,6 @@
 package fr.ac6.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,41 +10,30 @@ import java.util.Date;
 @Entity
 @Table(name = "licenses")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt", "validUntil"},
-        allowGetters = true)
+@JsonIgnoreProperties(value = {"validUntil"}, allowGetters = true)
 public class License {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate
-    private Date createdAt;
-
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate
-    private Date updatedAt;
-
     @NotBlank
     private String macAddress;
 
     @NotBlank
-    private String emailAddress;
+    private String licenseFeature;
 
     @NotBlank
     private String licenseType;
 
     @NotBlank
-    private String licenseFeature;
+    private String licenseKey;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date validUntil;
 
     @NotBlank
-    private String licenseKey;
+    private String status;
 
     public Long getId() {
         return id;
@@ -54,22 +41,6 @@ public class License {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public String getMacAddress() {
@@ -80,12 +51,12 @@ public class License {
         this.macAddress = macAddress;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getLicenseType() {

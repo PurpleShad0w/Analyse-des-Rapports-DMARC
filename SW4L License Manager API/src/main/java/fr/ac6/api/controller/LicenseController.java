@@ -6,6 +6,7 @@ import fr.ac6.api.repository.LicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,6 +17,9 @@ public class LicenseController {
 
     @Autowired
     LicenseRepository LicenseRepository;
+
+
+    // REST Mappings
 
     @GetMapping("/licenses")
     public List<License> getAllLicenses() {
@@ -41,11 +45,11 @@ public class LicenseController {
                 .orElseThrow(() -> new ResourceNotFoundException("License", "id", LicenseId));
 
         License.setMacAddress(LicenseDetails.getMacAddress());
-        License.setEmailAddress(LicenseDetails.getEmailAddress());
-        License.setLicenseType(LicenseDetails.getLicenseType());
         License.setLicenseFeature(LicenseDetails.getLicenseFeature());
-        License.setValidUntil(LicenseDetails.getValidUntil());
+        License.setLicenseType(LicenseDetails.getLicenseType());
         License.setLicenseKey(LicenseDetails.getLicenseKey());
+        License.setValidUntil(LicenseDetails.getValidUntil());
+        License.setStatus(LicenseDetails.getStatus());
 
         License updatedLicense = LicenseRepository.save(License);
         return updatedLicense;
@@ -60,4 +64,12 @@ public class LicenseController {
 
         return ResponseEntity.ok().build();
     }
+
+
+    // POST Mappings
+
+    @GetMapping("")
+    public ResponseEntity<List<License>> getLicenseByMacAddressAndLicenseFeature(@RequestParam String macAddress, @RequestParam String licenseFeature) {
+		return new ResponseEntity<List<License>>(LicenseRepository.findByMacAddressAndLicenseFeature(macAddress, licenseFeature), HttpStatus.OK);
+	}
 }
