@@ -3,6 +3,15 @@ package fr.ac6.api.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * This class defines an exception that is to be called if a License cannot be found within the database.
+ * Its purpose is to indicate which ID or license feature matches incorrectly with the database,
+ * and allow the request to receive an explanation for its failure.
+ * Generic exception that can be used for any field a value has not been found for.
+ * 
+ * @author Octave
+ */
+
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
     private String resourceName;
@@ -16,6 +25,10 @@ public class ResourceNotFoundException extends RuntimeException {
         this.fieldValue = fieldValue;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getResourceName() {
         return resourceName;
     }
