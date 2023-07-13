@@ -8,8 +8,8 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
- * This class defines the model of what a "License" is, such as each of its features (also called Details).
- * Within the definition of a License also resides simple functions meant to allow each feature to become a variable.
+ * This class defines the model of what a "License" is, such as each of its features (also called Details). <br>
+ * Within the definition of a License also resides simple functions meant to allow each feature to become a variable. <br>
  * As such, individual functions do not need to be documented here, and as a rule of thumb,
  * each feature is defined once, has one function to input a value and one function to output a value.
  * 
@@ -44,10 +44,7 @@ public class License {
     @NotBlank
     private String status;
 
-    
-    /** 
-     * @return Long
-     */
+
     public Long getId() {
         return id;
     }

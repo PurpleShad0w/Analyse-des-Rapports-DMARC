@@ -12,9 +12,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * This class is the controller of the API, it manages the HTTP requests we can send it.
+ * This class is the controller of the API, it manages the HTTP requests we can send it. <br>
  * The requests under REST Mappings are the classical methods to be used in case we need to modify the database without going through MySQL,
- * as a safeguard. The request under MAIN Mapping is the one to be called for general use. 
+ * as a safeguard. <br> The request under MAIN Mapping is the one to be called for general use. 
  * 
  * @author Octave
  */
@@ -30,7 +30,7 @@ public class LicenseController {
     // REST Mappings
 
     /**
-     * Request called at {host}/api/licenses.
+     * Request called at {host}/api/licenses. <br>
      * No input required.
      * @return All registered licenses in the database.
      */
@@ -114,11 +114,11 @@ public class LicenseController {
     // MAIN Mapping
 
     /**
-     * Request called at {host}/api.
-     * Expected input format:
-     * {macAddress:###, licenseFeature:###}
-     * Expected output format:
-     * [{validUntil:###, status:###}, {}]
+     * Request called at {host}/api. <br>
+     * Expected input format: <br>
+     * {macAddress:###, licenseFeature:###} <br>
+     * Expected output format: <br>
+     * [{validUntil:###, status:###}, {}] <br>
      * Returns list as a safeguard, should only ever contain one license.
      * @param macAddress MAC address of the computer we are requesting from.
      * @param licenseFeature Feature found in the license file, to differenciate products sold.

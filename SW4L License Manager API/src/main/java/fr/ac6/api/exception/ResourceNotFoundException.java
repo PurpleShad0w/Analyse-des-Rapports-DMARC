@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * This class defines an exception that is to be called if a License cannot be found within the database.
+ * This class defines an exception that is to be called if a License cannot be found within the database. <br>
  * Its purpose is to indicate which ID or license feature matches incorrectly with the database,
- * and allow the request to receive an explanation for its failure.
+ * and allow the request to receive an explanation for its failure. <br>
  * Generic exception that can be used for any field a value has not been found for.
  * 
  * @author Octave
@@ -25,10 +25,7 @@ public class ResourceNotFoundException extends RuntimeException {
         this.fieldValue = fieldValue;
     }
 
-    
-    /** 
-     * @return String
-     */
+
     public String getResourceName() {
         return resourceName;
     }
