@@ -1,3 +1,37 @@
+.block {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    font-family: Arial;
+    font-size: x-large;
+    background-color: #F3F3F4;
+    box-shadow: 1px 1px #D2D3D5,
+                2px 2px #D2D3D5;
+}
+
+.block img {
+    width: 100%;
+    height: 100%;
+}
+
+.block p {
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+}
+
+.block_outer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 300px;
+}
+
 .inner {
     position: relative;
     width: 750px;
@@ -95,6 +129,10 @@ table {
 }
 
 @media screen and (max-width: 900px) {
+    .block_outer {
+        width: 300px;
+    }
+    
     .boxes td {
         display: table-row;
     }
