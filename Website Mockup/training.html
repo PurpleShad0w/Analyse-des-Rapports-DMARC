@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/training.css">
-    <script src="js/training.js"></script>
+    <script src="js/training.js" defer></script>
     <title>Test</title>
 </head>
 <body>
@@ -176,18 +176,20 @@
             </td>
         </tr>
     </table>
-    <table class="linux">
+    <table class="linux_phone pchidden">
         <tr>
-            <td rowspan="2">
+            <td>
                 <img id="bottomPicture" src="img/SW4L.png" alt=""/>
             </td>
         </tr>
+    </table>
+    <table class="linux_phone pchidden">
         <tr>
             <td>
-                <img id="button1" src="img/button_clicked.png" alt=""/>
+                <img id="button1" class="button" onclick="switch1()" src="img/button_clicked.png" alt=""/>
             </td>
             <td>
-                <img id="button2" src="img/button.png" alt=""/>
+                <img id="button2" class="button" onclick="switch2()" src="img/button.png" alt=""/>
             </td>
         </tr>
     </table>
