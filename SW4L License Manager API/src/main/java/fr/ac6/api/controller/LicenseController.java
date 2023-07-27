@@ -2,11 +2,13 @@ package fr.ac6.api.controller;
 
 import fr.ac6.api.exception.ResourceNotFoundException;
 import fr.ac6.api.model.License;
+import fr.ac6.api.model.Input;
 import fr.ac6.api.repository.LicenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import javax.ws.rs.Produces;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -125,8 +127,11 @@ public class LicenseController {
      * @return Sends back the Status and Validity Date of the license, in JSON format.
      */
 
-    @GetMapping("")
-    public ResponseEntity<List<License>> getLicenseByMacAddressAndLicenseFeature(@RequestParam String macAddress, @RequestParam String licenseFeature) {
-		return new ResponseEntity<List<License>>(LicenseRepository.findByMacAddressAndLicenseFeature(macAddress, licenseFeature), HttpStatus.OK);
+    @PostMapping("")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Input theMainRequest(@Valid @RequestBody Input input) {
+        String macAddress = input.getMacAddress();
+        String licenseFeature = input.getLicenseFeature();
+		return LicenseRepository.mainRequest(macAddress, licenseFeature);
 	}
 }

@@ -26,5 +26,5 @@ public interface LicenseRepository extends JpaRepository<License, Long> {
      * so it should never be renamed unless we mean to change what it does.
      */
 
-    List<License> findByMacAddressAndLicenseFeature(String macAddress, String licenseFeature);
+    List<License> mainRequest(String macAddress, String licenseFeature);
 }
