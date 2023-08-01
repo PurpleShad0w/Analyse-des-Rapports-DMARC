@@ -28,8 +28,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 450px;
+    width: 300px;
     height: 300px;
+}
+
+.boxes tr {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.boxes td {
+    display: table-row;
 }
 
 .button {
@@ -48,7 +58,7 @@
 
 .inner {
     position: relative;
-    width: 750px;
+    width: 600px;
     height: 300px;
     font-family: Arial;
     font-size: x-large;
@@ -69,16 +79,15 @@
 .linux {
     text-align: left; 
     vertical-align: middle;
-    width: 1500px;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
     font-family: Arial;
     font-size: medium;
     border-spacing: 20px;
-    border-collapse: separate;
 }
 
-.linux td img {
+.linux img {
     display: table-cell;
     display: block;
     margin-left: auto;
@@ -119,6 +128,13 @@
     color: white;
     background-color: #60A0CF;
     border-radius: 10px;
+}
+
+.sessions tr {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px;
 }
 
 table {
