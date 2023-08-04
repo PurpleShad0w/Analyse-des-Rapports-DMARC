@@ -1,0 +1,28 @@
+Pré-requis pour émuler les requêtes POST :
+
+- XAMPP installé (ou autre service de hosting Apache)
+- base de données MySQL existante dans le bon format (déjà le cas sur cet ordinateur, le format est détaillé dans database.sql)
+- MySQL tourne en fond (meilleure façon de s'en assurer est de lancer MySQL Workbench)
+
+
+La procédure à reproduire sur cet ordinateur :
+
+- démarrer XAMPP et cliquer sur Start au niveau d'Apache
+- lancer la function App.java via VS Code ou le CMD
+- le résultat de la requête est imprimé dans le terminal, normalement sans toucher au paramètre initiaux, on obtient la ligne suivante :
+        {"status":1,"info":[{"valid_until":"2023-12-31","status":"ok"}]}
+
+
+La procédure à reproduire si sur un autre ordinateur :
+
+- installer MySQL et créer la base de données en utilisant le script database.sql
+- y rentrer une ligne de données de test, soit ce qu'il y a déjà sur cette machine soit autre peu importe tant que les paramètres sont accordés
+- faire tourner MySQL en fond
+- changer les valeurs de config.ini pour correspondre à la base de données actuelle
+
+- installer et démarrer XAMPP ou une alternative
+- se diriger dans le dossier XAMPP/htdocs et y créer un dossier "post"
+- y placer les fichiers suivants : post.php, config.php, config.ini
+- lancer le hosting Apache via XAMPP
+
+- la requête peut maintenant être effectuée

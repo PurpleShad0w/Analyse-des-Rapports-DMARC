@@ -5,6 +5,6 @@ CREATE TABLE LICENSES (
     license_feature VARCHAR(255),
     license_type VARCHAR(255),
     license_key VARCHAR(255),
-    valid_until DATETIME,
+    valid_until DATE,
     status VARCHAR(255)
 )
