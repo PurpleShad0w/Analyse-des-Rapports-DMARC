@@ -1,6 +1,11 @@
+.cells {
+    border-left: 2px solid black;
+    text-align: center;
+}
+
 .checkmark {
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
 }
 
 .even {
@@ -16,6 +21,11 @@
     height: 50px;
 }
 
+.logos {
+    height: 50px;
+    width: 75px;
+}
+
 .odd {
     background-color: #F4ECD4;
 }
@@ -23,4 +33,20 @@
 p {
     font-family: Arial;
     color: #707070;
+}
+
+.plus {
+    position: absolute;
+    width: 120px;
+    height: 30px;
+    line-height: 0%;
+    text-align: center;
+    font-family: Arial;
+    font-size: medium;
+    background-color: #fdc20b;
+    border-radius: 10px;
+}
+
+table {
+    border-collapse: collapse;
 }

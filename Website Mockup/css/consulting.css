@@ -1,0 +1,19 @@
+.contact {
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-family: Arial;
+    font-size: medium;
+    background-color: #60A0CF;
+    border-radius: 10px;
+}
+
+p {
+    font-family: Arial;
+    color: #707070;
+}
+
+table td {
+    padding: 0 50px;
+}
