@@ -3,19 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/tools.css">
     <title>Test</title>
+    <style>
+        .cells {
+            border-left: 0.25vh solid black;
+            text-align: center;
+        }
+        
+        .checkmark {
+            height: 5vh;
+            width: 5vh;
+        }
+        
+        .plus {
+            position: absolute;
+            width: 17vh;
+            height: 4.5vh;
+            line-height: 0%;
+            text-align: center;
+            font-family: Arial;
+            font-size: medium;
+            background-color: #fdc20b;
+            border-radius: 1.5vh;
+        }
+
+        p {
+            font-family: Arial;
+            color: #707070;
+        }
+    </style>
 </head>
 <body>
-    <div class="icons">
-        <img src="img/PDF.png" alt=""/>
-        <img src="img/share.png" alt=""/>
-        <img src="img/mail.png" alt=""/>
+    <div style="text-align: right;">
+        <img style="width: 7vh; height: 7vh;" src="img/PDF.png" alt=""/>
+        <img style="width: 7vh; height: 7vh;" src="img/share.png" alt=""/>
+        <img style="width: 7vh; height: 7vh;" src="img/mail.png" alt=""/>
     </div>
     <table style="display: inline-block; width: 70%;">
         <tr>
             <td colspan="4">
-                <img style="width: 500px;" src="img/SW4L.png" alt=""/>
+                <img style="width: 70vh;" src="img/SW4L.png" alt=""/>
                 <p style="font-size: xx-large;">
                     <b><span style="color:#fdc20b">System Workbench</span> <span style="color:black">for</span> <span style="color:#fdc20b">Linux</span></b>
                 </p>
@@ -63,7 +90,7 @@
             </td>
         </tr>
     </table>
-    <table style="float: right;">
+    <table style="float: right; border-collapse: collapse;">
         <tr>
             <td colspan="3" style="text-align: center;">
                 <p style="font-size: xx-large;">
@@ -74,13 +101,13 @@
         <tr>
             <td></td>
             <td>
-                <img class="logos" src="img/yocto.png" alt=""/>
+                <img style="height: 7vh; width: 10vh;" src="img/yocto.png" alt=""/>
             </td>
             <td>
-                <img class="logos" src="img/SW.png" alt=""/>
+                <img style="height: 7vh; width: 10vh;" src="img/SW.png" alt=""/>
             </td>
         </tr>
-        <tr class="odd">
+        <tr style="background-color: #F4ECD4;">
             <td>
                 <p>Linux Distribution builder</p>
             </td>
@@ -91,7 +118,7 @@
                 <img class="checkmark" src="img/checkmark green.png" alt=""/>
             </td>
         </tr>
-        <tr class="even">
+        <tr style="background-color: #F7F7F7;">
             <td>
                 <p>Extensive Package support</p>
             </td>
@@ -102,7 +129,7 @@
                 <img class="checkmark" src="img/checkmark green.png" alt=""/>
             </td>
         </tr>
-        <tr class="odd">
+        <tr style="background-color: #F4ECD4;">
             <td>
                 <p>Kernel configuration</p>
             </td>
@@ -113,7 +140,7 @@
                 <img class="checkmark" src="img/checkmark green.png" alt=""/>
             </td>
         </tr>
-        <tr class="even">
+        <tr style="background-color: #F7F7F7;">
             <td>
                 <p>Graphical user interface</p>
             </td>
@@ -124,7 +151,7 @@
                 <img class="checkmark" src="img/checkmark green.png" alt=""/>
             </td>
         </tr>
-        <tr class="odd">
+        <tr style="background-color: #F4ECD4;">
             <td>
                 <p>Intuitive</p>
             </td>
@@ -135,7 +162,7 @@
                 <img class="checkmark" src="img/checkmark green.png" alt=""/>
             </td>
         </tr>
-        <tr class="even">
+        <tr style="background-color: #F7F7F7;">
             <td>
                 <p>Application development & debug</p>
             </td>
@@ -146,7 +173,7 @@
                 <img class="checkmark" src="img/checkmark green.png" alt=""/>
             </td>
         </tr>
-        <tr class="odd">
+        <tr style="background-color: #F4ECD4;">
             <td>
                 <p>Driver development</p>
             </td>
@@ -157,7 +184,7 @@
                 <img class="checkmark" src="img/checkmark green.png" alt=""/>
             </td>
         </tr>
-        <tr class="even">
+        <tr style="background-color: #F7F7F7;">
             <td>
                 <p>SDCard Layout</p>
             </td>
@@ -168,7 +195,7 @@
                 <img class="checkmark" src="img/checkmark green.png" alt=""/>
             </td>
         </tr>
-        <tr class="odd">
+        <tr style="background-color: #F4ECD4;">
             <td>
                 <p>Asymmetric development & debug</p>
             </td>

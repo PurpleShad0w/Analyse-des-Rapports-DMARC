@@ -3,29 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/training.css">
-    <script src="js/training.js" defer></script>
+    <script type="module">
+        let images = ['img/SW4L.png', 'img/AC6.png'];
+        let buttons = ['img/button.png', 'img/button_clicked.png']
+        
+        let index = 0;
+        let button_state = 0;
+        
+        const imgElement = document.getElementById("bottomPicture");
+        const button1 = document.getElementById("button1");
+        const button2 = document.getElementById("button2");
+        
+        class Timer {
+            constructor(fn, t) {
+                var timerObj = setInterval(fn, t);
+        
+                this.stop = function () {
+                    if (timerObj) {
+                        clearInterval(timerObj);
+                        timerObj = null;
+                    }
+                    return this;
+                };
+        
+                this.start = function () {
+                    if (!timerObj) {
+                        this.stop();
+                        timerObj = setInterval(fn, t);
+                    }
+                    return this;
+                };
+        
+                this.reset = function (newT = t) {
+                    t = newT;
+                    return this.stop().start();
+                };
+            }
+        }
+        
+        function change() {
+            imgElement.src = images[index];
+            index == 1 ? index = 0 : index = 1;
+            button_state == 1 ? button_state = 0 : button_state = 1;
+            button_state == 0 ? button1.src = buttons[1] : button1.src = buttons[0];
+            button_state == 0 ? button2.src = buttons[0] : button2.src = buttons[1];
+        }
+        
+        var timer = new Timer(function() {change()}, 5000);
+        
+        function switch1() {
+            imgElement.src = 'img/SW4L.png';
+            button_state = 0;
+            button1.src = buttons[1];
+            button2.src = buttons[0];
+            index == 1 ? index = 0 : index = 1;
+            timer.reset(5000);
+        }
+        
+        function switch2() {
+            imgElement.src = 'img/AC6.png';
+            button_state = 1;
+            button1.src = buttons[0];
+            button2.src = buttons[1];
+            index == 1 ? index = 0 : index = 1;
+            timer.reset(5000);
+        }
+    </script>
     <title>Test</title>
+    <style>
+        @media screen and (max-width: 900px) {
+            .show_pc {
+                display: none;
+            }
+
+            .boxes td {
+                display: table-row;
+            }
+
+            table {
+                width: max-content;
+            }
+        }
+
+        @media screen and (min-width: 900px) {
+            
+        }
+
+        .block {
+            position: absolute;
+            width: 42vh;
+            height: 36vh;
+            font-size: large;
+            background-color: #F3F3F4;
+            box-shadow: 0.15vh 0.15vh #D2D3D5,
+                        0.25vh 0.25vh #D2D3D5;
+        }
+        
+        .inner {
+            position: relative;
+            width: 92vh;
+            height: 42vh;
+            background-color: #F3F3F4;
+            box-shadow: 0.15vh 0.15vh #D2D3D5,
+                        0.25vh 0.25vh #D2D3D5;
+        }
+        
+        .inner img {
+            position: absolute;
+            top: -4vh;
+            right: -4vh;
+            max-width: 10%;
+            max-height: 20%;
+            z-index: 100;
+        }
+        
+        .linux {
+            text-align: left; 
+            vertical-align: middle;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: medium;
+            border-spacing: 3vh;
+            border-collapse: separate;
+        }
+        
+        .linux td img {
+            display: table-cell;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .more {
+            width: 17vh;
+            height: 7vh;
+            text-align: center;
+            font-size: medium;
+            color: white;
+            background-color: #60A0CF;
+            border-radius: 1.5vh;
+            display: table-cell;
+        }
+        
+        .outer {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 56.5vh;
+        }
+        
+        .plus {
+            position: absolute;
+            bottom: 0.75vh;
+            right: 0.75vh;
+            width: 17vh;
+            height: 4vh;
+            line-height: 0%;
+            text-align: center;
+            font-size: medium;
+            color: white;
+            background-color: #60A0CF;
+            border-radius: 1.5vh;
+        }
+        
+        .title {
+            position: absolute;
+            width: 53vh;
+            height: 4vh;
+            line-height: 0%;
+            top: 0;
+            bottom: 1.5vh;
+            text-align: center;
+            font-size: xx-large;
+        }
+
+        li {
+            font-family: Arial;
+            font-size: x-large;
+        }
+
+        p {
+            font-family: Arial;
+            font-size: x-large;
+        }
+    </style>
 </head>
 <body>
-    <div class="icons">
-        <img src="img/PDF.png" alt=""/>
-        <img src="img/share.png" alt=""/>
-        <img src="img/mail.png" alt=""/>
+    <div style="text-align: right;">
+        <img style="width: 7vh; height: 7vh;" src="img/PDF.png" alt=""/>
+        <img style="width: 7vh; height: 7vh;" src="img/share.png" alt=""/>
+        <img style="width: 7vh; height: 7vh;" src="img/mail.png" alt=""/>
     </div>
-    <table>
+    <table style="width: unset;">
         <tr>
             <td>
-                <p class="text">
+                <p>
                     <b>La formation chez AC6</b>
                 </p>
-                <p class="text">
+                <p>
                     AC6 vous aide à développer vos compétences en systèmes embarqués. Partenaire de <b>STMicroelectronics</b> et <b>NXP</b> et membre de la <b>ARM Community</b>, nous vous donnons accès aux dernières technologies et vous permettons de maîtriser votre projet. Nos services comprennent la <span style="color:#60A0CF">formation</span> à l'<span style="color:#60A0CF">assistance</span> et le <span style="color:#60A0CF">conseil</span>, avec une double compétence en électronique et en informatique.
                 </p>
             </td>
         </tr>
     </table>
-    <table class="boxes">
+    <table style="width: 100%;" class="boxes">
         <tr>
             <td>
                 <div class="outer">
@@ -40,7 +223,7 @@
                             <li><b>QT :</b> Création d'interfaces graphiques sur Linux</li>
                         </ul>
                         <div class="plus">
-                            <p><b>voir plus</b></p>
+                            <p style="font-size: medium;"><b>voir plus</b></p>
                         </div>
                     </div>
                 </div>
@@ -58,7 +241,7 @@
                             <li><b>RTOS :</b> Comprendre l'architecture, les services et applications de FreeRtos</li>
                         </ul>
                         <div class="plus">
-                            <p><b>voir plus</b></p>
+                            <p style="font-size: medium;"><b>voir plus</b></p>
                         </div>
                     </div>
                 </div>
@@ -78,7 +261,7 @@
                             <li><b>SystemC :</b> Conception et Simulation en SystemC</li>
                         </ul>
                         <div class="plus">
-                            <p><b>voir plus</b></p>
+                            <p style="font-size: medium;"><b>voir plus</b></p>
                         </div>
                     </div>
                 </div>
@@ -97,7 +280,7 @@
                             <li><b>NXP MCU :</b> Familles Kinetis, LPC & i.MX</li>
                         </ul>
                         <div class="plus">
-                            <p><b>voir plus</b></p>
+                            <p style="font-size: medium;"><b>voir plus</b></p>
                         </div>
                     </div>
                 </div>
@@ -117,59 +300,59 @@
                             <li><b>Embedded Security for NXP i.MX :</b> Security of embedded systems and NXP</li>
                         </ul>
                         <div class="plus">
-                            <p><b>voir plus</b></p>
+                            <p style="font-size: medium;"><b>voir plus</b></p>
                         </div>
                     </div>
                 </div>
             </td>
         </tr>
     </table>
-    <p class="text">
+    <p>
         <b>Type de session</b>
     </p>
     <table>
         <tr>
-            <td>
-                <div class="block_outer">
+            <td style="text-align: center;">
+                <div style="display: flex; justify-content: center; width: 52vh; height: 36vh;">
                     <div class="block">
-                        <img src="img/online private.png" alt=""/>
-                        <p>Private Online Session</p>
+                        <img style="width: 70%; height: 75%; position: relative; top: 2vh;" src="img/online private.png" alt=""/>
+                        <p style="position: absolute; width: 100%; bottom: 0vh;">Private Online Session</p>
                     </div>
                 </div>
             </td>
-            <td>
-                <div class="block_outer">
+            <td style="text-align: center;">
+                <div style="display: flex; justify-content: center; width: 52vh; height: 36vh;">
                     <div class="block">
-                        <img src="img/online public.png" alt=""/>
-                        <p>Public Online Session</p>
+                        <img style="width: 75%; height: 60%; position: relative; top: 5vh;" src="img/online public.png" alt=""/>
+                        <p style="position: absolute; width: 100%; bottom: 0vh;">Public Online Session</p>
                     </div>
                 </div>
             </td>
-            <td>
-                <div class="block_outer">
+            <td style="text-align: center;" class="show_pc">
+                <div style="display: flex; justify-content: center; width: 52vh; height: 36vh;">
                     <div class="block">
-                        <img src="img/on site private.png" alt=""/>
-                        <p>Private On Site Session</p>
+                        <img style="width: 75%; height: 60%; position: relative; top: 5vh;" src="img/on site private.png" alt=""/>
+                        <p style="position: absolute; width: 100%; bottom: 0vh;">Private On Site Session</p>
                     </div>
                 </div>
             </td>
-            <td>
-                <div class="block_outer">
+            <td style="text-align: center;" class="show_pc">
+                <div style="display: flex; justify-content: center; width: 52vh; height: 36vh;">
                     <div class="block">
-                        <img src="img/on site public.png" alt=""/>
-                        <p>Public On Site Session</p>
+                        <img style="width: 80%; height: 60%; position: relative; top: 5vh;" src="img/on site public.png" alt=""/>
+                        <p style="position: absolute; width: 100%; bottom: 0vh;">Public On Site Session</p>
                     </div>
                 </div>
             </td>
         </tr>
         <tr>
-            <td colspan="2" class="text_cell">
-                <p class="text">
+            <td colspan="2" style="text-align: center;">
+                <p>
                     <b>Online Session</b>
                 </p>
             </td>
-            <td colspan="2" class="text_cell">
-                <p class="text">
+            <td colspan="2" style="text-align: center;" class="show_pc">
+                <p>
                     <b>On-site Session</b>
                 </p>
             </td>
@@ -180,13 +363,13 @@
             <td>
                 <img id="bottomPicture" src="img/SW4L.png" alt=""/>
             </td>
-            <td>
-                <p>System Workbench for Linux est l'Outil de développement qui vous facilite la Construction, le débogage ainsi que la Maintenance de votre Système Linux Embarqué.</p>
-                <p>De plus, couplé avec System Workbench for STM32, il permet le développement et le débogage simultané d'applications réparties entre Linux et le coeur Cortex-M4 du SoC STM32MP1.</p>
+            <td class="show_pc">
+                <p style="font-size: large;">System Workbench for Linux est l'Outil de développement qui vous facilite la Construction, le débogage ainsi que la Maintenance de votre Système Linux Embarqué.</p>
+                <p style="font-size: large;">De plus, couplé avec System Workbench for STM32, il permet le développement et le débogage simultané d'applications réparties entre Linux et le coeur Cortex-M4 du SoC STM32MP1.</p>
             </td>
-            <td>
+            <td class="show_pc">
                 <div class="more">
-                    <p><b>Learn more</b></p>
+                    <p style="font-size: medium;"><b>Learn more</b></p>
                 </div>
             </td>
         </tr>
@@ -194,10 +377,10 @@
     <table class="linux">
         <tr>
             <td>
-                <img id="button1" class="button" onclick="switch1()" src="img/button_clicked.png" alt=""/>
+                <img id="button1" style="width: 7vh; height: 7vh;" onclick="switch1()" src="img/button_clicked.png" alt=""/>
             </td>
             <td>
-                <img id="button2" class="button" onclick="switch2()" src="img/button.png" alt=""/>
+                <img id="button2" style="width: 7vh; height: 7vh;" onclick="switch2()" src="img/button.png" alt=""/>
             </td>
         </tr>
     </table>
