@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
+    <!-- CSS incorporated into HTML -->
     <style>
         #contact {
             position: absolute;
@@ -11,10 +12,10 @@
             height: 7vh;
             text-align: center;
             font-family: Arial;
-            font-size: medium;
+            font-size: x-large;
             background-color: #60A0CF;
             border-radius: 1.5vh;
-            bottom: 0vh;
+            bottom: 10vh;
         }
 
         p {
@@ -28,11 +29,14 @@
     </style>
 </head>
 <body>
+    <!-- This div contains the 3 icons in the top right corner of the page, the Print and Mail To (ac6@ac6.fr) work fine, the Share button is empty for now -->
     <div style="text-align: right;">
-        <img style="width: 7vh; height: 7vh;" src="img/PDF.png" alt=""/>
-        <img style="width: 7vh; height: 7vh;" src="img/share.png" alt=""/>
-        <img style="width: 7vh; height: 7vh;" src="img/mail.png" alt=""/>
+        <img onclick="window.print()" style="width: 7vh; height: 7vh; cursor: pointer;" src="img/PDF.png" alt=""/>
+        <img style="width: 7vh; height: 7vh; cursor: pointer;" src="img/share.png" alt=""/>
+        <img onclick="location.href='mailto:ac6@ac6.fr';" style="width: 7vh; height: 7vh; cursor: pointer;" src="img/mail.png" alt=""/>
     </div>
+    <!-- This table constitutes by itself most of the page, composed of a giant image followed by a text promoting the use of Yocto, and a contact button that leads home for now -->
+    <!-- The image is a placeholder, and the text might be either set as alternating to showcase different areas of expertise of AC6 consulting or simply replaced with something more relevant -->
     <table>
         <tr>
             <td style="width: 40%;">
@@ -53,9 +57,11 @@
                 </p>
             </td>
             <td style="vertical-align: bottom;">
-                <div id="contact">
-                    <p style="color: white;"><b>Contactez-nous</b></p>
-                </div>
+                <a href="home.html">
+                    <div id="contact">
+                        <p style="color: white;"><b>Contactez-nous</b></p>
+                    </div>
+                </a>
             </td>
         </tr>
     </table>

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- JS incorporated into the HTML, the 'module' type forces the Javascript to load only after the page is fully loaded -->
+    <!-- Warning : Switching to inline Javascript instead of using another file broke the manual switch buttons, so either they can exist as simply auto-switching, or the Javascript needs to be put into its own file -->
     <script type="module">
         let images = ['img/SW4L.png', 'img/AC6.png'];
         let buttons = ['img/button.png', 'img/button_clicked.png']
@@ -14,6 +16,8 @@
         const button1 = document.getElementById("button1");
         const button2 = document.getElementById("button2");
         
+        /* Specialized class for a timer object, allows for easy manipulation of the remaining seconds before the switch */
+        /* Rather explicit main functions : start, stop and reset. Need to feed the new time to reset, the rest simply needs to be called */
         class Timer {
             constructor(fn, t) {
                 var timerObj = setInterval(fn, t);
@@ -41,6 +45,7 @@
             }
         }
         
+        /* Function to handle switching between the two button states and images automatically */
         function change() {
             imgElement.src = images[index];
             index == 1 ? index = 0 : index = 1;
@@ -51,6 +56,7 @@
         
         var timer = new Timer(function() {change()}, 5000);
         
+        /* Function to handle the first manual button, switches the images and button states, and resets the timer to prevent jankyness */
         function switch1() {
             imgElement.src = 'img/SW4L.png';
             button_state = 0;
@@ -60,6 +66,7 @@
             timer.reset(5000);
         }
         
+        /* Literally the twin of the previous function, only this time for the other image and state */
         function switch2() {
             imgElement.src = 'img/AC6.png';
             button_state = 1;
@@ -70,7 +77,10 @@
         }
     </script>
     <title>Test</title>
+    <!-- CSS incorporated into HTML -->
     <style>
+        /* This particular condition checks whether the screen size, if it is smaller than 900px it is considered a mobile device and changes are reflected as such */
+        /* Some divs are hidden, the 'boxes' table is displayed vertically and all tables are made to fit the whole screen */
         @media screen and (max-width: 900px) {
             .show_pc {
                 display: none;
@@ -191,11 +201,13 @@
     </style>
 </head>
 <body>
+    <!-- This div contains the 3 icons in the top right corner of the page, the Print and Mail To (ac6@ac6.fr) work fine, the Share button is empty for now -->
     <div style="text-align: right;">
-        <img style="width: 7vh; height: 7vh;" src="img/PDF.png" alt=""/>
-        <img style="width: 7vh; height: 7vh;" src="img/share.png" alt=""/>
-        <img style="width: 7vh; height: 7vh;" src="img/mail.png" alt=""/>
+        <img onclick="window.print()" style="width: 7vh; height: 7vh; cursor: pointer;" src="img/PDF.png" alt=""/>
+        <img style="width: 7vh; height: 7vh; cursor: pointer;" src="img/share.png" alt=""/>
+        <img onclick="location.href='mailto:ac6@ac6.fr';" style="width: 7vh; height: 7vh; cursor: pointer;" src="img/mail.png" alt=""/>
     </div>
+    <!-- This table contains the introductory paragraph for AC6 Training -->
     <table style="width: unset;">
         <tr>
             <td>
@@ -208,6 +220,8 @@
             </td>
         </tr>
     </table>
+    <!-- This table contains the boxes displaying the various available courses -->
+    <!-- Each box contains a title, a list of subjects, a logo as well as a button supposed to redirect to the course's page (home for now) -->
     <table style="width: 100%;" class="boxes">
         <tr>
             <td>
@@ -222,9 +236,11 @@
                             <li><b>Drivers :</b> Traite des techniques nécessaires à l'écriture de drivers Linux</li><br>
                             <li><b>QT :</b> Création d'interfaces graphiques sur Linux</li>
                         </ul>
-                        <div class="plus">
-                            <p style="font-size: medium;"><b>voir plus</b></p>
-                        </div>
+                        <a href="home.html">
+                            <div class="plus">
+                                <p style="font-size: medium;"><b>voir plus</b></p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </td>
@@ -240,9 +256,11 @@
                             <li><b>Temps réel :</b> Programmation et conception temps réel-multicore</li><br>
                             <li><b>RTOS :</b> Comprendre l'architecture, les services et applications de FreeRtos</li>
                         </ul>
-                        <div class="plus">
-                            <p style="font-size: medium;"><b>voir plus</b></p>
-                        </div>
+                        <a href="home.html">
+                            <div class="plus">
+                                <p style="font-size: medium;"><b>voir plus</b></p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </td>
@@ -260,9 +278,11 @@
                             <li><b>Processors :</b> Description des concepts de base des microprocesseurs</li><br>
                             <li><b>SystemC :</b> Conception et Simulation en SystemC</li>
                         </ul>
-                        <div class="plus">
-                            <p style="font-size: medium;"><b>voir plus</b></p>
-                        </div>
+                        <a href="home.html">
+                            <div class="plus">
+                                <p style="font-size: medium;"><b>voir plus</b></p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </td>
@@ -279,9 +299,11 @@
                             <li><b>NXP CPUs :</b> Familles QorIQ - LayerScape</li><br>
                             <li><b>NXP MCU :</b> Familles Kinetis, LPC & i.MX</li>
                         </ul>
-                        <div class="plus">
-                            <p style="font-size: medium;"><b>voir plus</b></p>
-                        </div>
+                        <a href="home.html">
+                            <div class="plus">
+                                <p style="font-size: medium;"><b>voir plus</b></p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </td>
@@ -299,9 +321,11 @@
                             <li><b>Embedded Security for STM32 :</b> Familles STM32 à coeur Cortex M</li><br>
                             <li><b>Embedded Security for NXP i.MX :</b> Security of embedded systems and NXP</li>
                         </ul>
-                        <div class="plus">
-                            <p style="font-size: medium;"><b>voir plus</b></p>
-                        </div>
+                        <a href="home.html">
+                            <div class="plus">
+                                <p style="font-size: medium;"><b>voir plus</b></p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </td>
@@ -310,37 +334,47 @@
     <p>
         <b>Type de session</b>
     </p>
+    <!-- This table contains 4 boxes displaying the different types of training sessions available, with titles below and between each set of two boxes -->
+    <!-- Each box should lead to their respective course page, for now they lead to the home page -->
     <table>
         <tr>
             <td style="text-align: center;">
                 <div style="display: flex; justify-content: center; width: 52vh; height: 36vh;">
                     <div class="block">
-                        <img style="width: 70%; height: 75%; position: relative; top: 2vh;" src="img/online private.png" alt=""/>
-                        <p style="position: absolute; width: 100%; bottom: 0vh;">Private Online Session</p>
+                        <a style="text-decoration: none" href="home.html">
+                            <img style="width: 70%; height: 75%; position: relative; top: 2vh;" src="img/online private.png" alt=""/>
+                            <p style="position: absolute; width: 100%; bottom: 0vh;">Private Online Session</p>
+                        </a>
                     </div>
                 </div>
             </td>
             <td style="text-align: center;">
                 <div style="display: flex; justify-content: center; width: 52vh; height: 36vh;">
                     <div class="block">
-                        <img style="width: 75%; height: 60%; position: relative; top: 5vh;" src="img/online public.png" alt=""/>
-                        <p style="position: absolute; width: 100%; bottom: 0vh;">Public Online Session</p>
+                        <a style="text-decoration: none" href="home.html">
+                            <img style="width: 75%; height: 60%; position: relative; top: 5vh;" src="img/online public.png" alt=""/>
+                            <p style="position: absolute; width: 100%; bottom: 0vh;">Public Online Session</p>
+                        </a>
                     </div>
                 </div>
             </td>
             <td style="text-align: center;" class="show_pc">
                 <div style="display: flex; justify-content: center; width: 52vh; height: 36vh;">
                     <div class="block">
-                        <img style="width: 75%; height: 60%; position: relative; top: 5vh;" src="img/on site private.png" alt=""/>
-                        <p style="position: absolute; width: 100%; bottom: 0vh;">Private On Site Session</p>
+                        <a style="text-decoration: none" href="home.html">
+                            <img style="width: 75%; height: 60%; position: relative; top: 5vh;" src="img/on site private.png" alt=""/>
+                            <p style="position: absolute; width: 100%; bottom: 0vh;">Private On Site Session</p>
+                        </a>
                     </div>
                 </div>
             </td>
             <td style="text-align: center;" class="show_pc">
                 <div style="display: flex; justify-content: center; width: 52vh; height: 36vh;">
                     <div class="block">
-                        <img style="width: 80%; height: 60%; position: relative; top: 5vh;" src="img/on site public.png" alt=""/>
-                        <p style="position: absolute; width: 100%; bottom: 0vh;">Public On Site Session</p>
+                        <a style="text-decoration: none" href="home.html">
+                            <img style="width: 80%; height: 60%; position: relative; top: 5vh;" src="img/on site public.png" alt=""/>
+                            <p style="position: absolute; width: 100%; bottom: 0vh;">Public On Site Session</p>
+                        </a>
                     </div>
                 </div>
             </td>
@@ -358,6 +392,8 @@
             </td>
         </tr>
     </table>
+    <!-- This table contains the footer promoting System Workbench for Linux, it automatically switches between its logo and the company logo every 5 seconds -->
+    <!-- The buttons currently do not work, see JS comment (the 'Learn more' button however works as intended) -->
     <table class="linux">
         <tr>
             <td>
@@ -368,12 +404,15 @@
                 <p style="font-size: large;">De plus, couplé avec System Workbench for STM32, il permet le développement et le débogage simultané d'applications réparties entre Linux et le coeur Cortex-M4 du SoC STM32MP1.</p>
             </td>
             <td class="show_pc">
-                <div class="more">
-                    <p style="font-size: medium;"><b>Learn more</b></p>
-                </div>
+                <a style="text-decoration: none" href="tools.html">
+                    <div class="more">
+                        <p style="font-size: medium;"><b>Learn more</b></p>
+                    </div>
+                </a>
             </td>
         </tr>
     </table>
+    <!-- The aforementioned buttons, which are actually just two alternating clickable images -->
     <table class="linux">
         <tr>
             <td>

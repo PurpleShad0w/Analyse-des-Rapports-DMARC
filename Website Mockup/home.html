@@ -4,50 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
+    <!-- CSS script incorporated into the HTML -->
     <style>
+        /* General font size and color */
         p {
             font-family: Arial;
             color: #707070;
         }
         
+        /* Padding between table rows */
         table td {
             padding: 0 2vh;
         }
     </style>
 </head>
 <body>
+    <!-- This div contains the 3 icons in the top right corner of the page, the Print and Mail To (ac6@ac6.fr) work fine, the Share button is empty for now -->
     <div style="text-align: right;">
-        <img style="width: 7vh; height: 7vh;" src="img/PDF.png" alt=""/>
-        <img style="width: 7vh; height: 7vh;" src="img/share.png" alt=""/>
-        <img style="width: 7vh; height: 7vh;" src="img/mail.png" alt=""/>
+        <img onclick="window.print()" style="width: 7vh; height: 7vh; cursor: pointer;" src="img/PDF.png" alt=""/>
+        <img style="width: 7vh; height: 7vh; cursor: pointer;" src="img/share.png" alt=""/>
+        <img onclick="location.href='mailto:ac6@ac6.fr';" style="width: 7vh; height: 7vh; cursor: pointer;" src="img/mail.png" alt=""/>
     </div>
+    <!-- This table contains the 3 large icons corresponding to the 3 sectors of activity of AC6, clicking on one of them brings up the corresponding page -->
+    <!-- Change the value of 'href' in 'a' to redirect to another page, and of 'src' in 'img' to change the current image -->
     <table style="margin-left: auto; margin-right: auto; text-align: center;">
         <tr>
             <td style="padding: 0 7vh;">
-                <img style="width: 25.5vh; height: 22.5vh;" src="img/training.png" alt=""/>
-                <p>
-                    <b><span style="font-size: x-large;">Formation</span></b>
-                </p>
+                <a style="text-decoration: none" href="training.html">
+                    <img style="width: 25.5vh; height: 22.5vh;" src="img/training.png" alt=""/>
+                    <p>
+                        <b><span style="font-size: x-large;">Formation</span></b>
+                    </p>
+                </a>
             </td>
             <td style="padding: 0 7vh;">
-                <img style="width: 25.5vh; height: 22.5vh;" src="img/consulting.png" alt=""/>
-                <p>
-                    <b><span style="font-size: x-large;">Consulting</span></b>
-                </p>
+                <a style="text-decoration: none" href="consulting.html">
+                    <img style="width: 25.5vh; height: 22.5vh;" src="img/consulting.png" alt=""/>
+                    <p>
+                        <b><span style="font-size: x-large;">Consulting</span></b>
+                    </p>
+                </a>
             </td>
             <td style="padding: 0 7vh;">
-                <img style="width: 25.5vh; height: 22.5vh;" src="img/tools.png" alt=""/>
-                <p>
-                    <b><span style="font-size: x-large;">Outils</span></b>
-                </p>
+                <a style="text-decoration: none" href="tools.html">
+                    <img style="width: 25.5vh; height: 22.5vh;" src="img/tools.png" alt=""/>
+                    <p>
+                        <b><span style="font-size: x-large;">Outils</span></b>
+                    </p>
+                </a>
             </td>
         </tr>
     </table>
+    <!-- This paragraph contains the middle text describing the 3 sectors of activity of AC6 -->
     <p style="margin-left: 7vh;">
         <span style="color:#60A0CF">ac6-formation</span> propose un catalogue complet de formations couvrant tous les champs depuis l'informatique industrielle, le développement et la programmation de systèmes embarqués et temps-réels. <br>
         <span style="color:#60A0CF">ac6-conseil</span> propose des services de conseil, expertise et ingéniérie pour vous aider à développer vos systèmes embarqués. <br>
         <span style="color:#60A0CF">ac6-tools</span> propose un ensemble d'outils pour le développement de systèmes embarqués.
     </p>
+    <!-- This table contains the featured courses, displayed as a main course center stage and the rest as a small grid on the right side, with the description of the main course in the middle -->
+    <!-- The images are placeholders and meant to be changed -->
     <table style="margin-left: auto; margin-right: auto;">
         <tr>
             <td style="vertical-align: top;" rowspan="2">

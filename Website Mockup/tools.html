@@ -3,26 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Javascript incorporated into HTML, 'module' forces a deferred loading -->
+    <!-- Those functions simply find the corresponding text and change its color from white to black or vice-versa, without the visual issues that actually removing the text would cause -->
+    <script type="module">
+        var out1 = document.getElementById('reveal1');
+        var in1 = document.getElementById('hidden1');
+        var out2 = document.getElementById('reveal2');
+        var in2 = document.getElementById('hidden2');
+        var out3 = document.getElementById('reveal3');
+        var in3 = document.getElementById('hidden3');
+        var out4 = document.getElementById('reveal4');
+        var in4 = document.getElementById('hidden4');
+
+        out1.onmouseover = function() {
+            in1.style.color = 'black';
+        };
+        
+        out1.onmouseout = function() {
+            in1.style.color = 'white';
+        };
+
+        out2.onmouseover = function() {
+            in2.style.color = 'black';
+        };
+        
+        out2.onmouseout = function() {
+            in2.style.color = 'white';
+        };
+
+        out3.onmouseover = function() {
+            in3.style.color = 'black';
+        };
+        
+        out3.onmouseout = function() {
+            in3.style.color = 'white';
+        };
+
+        out4.onmouseover = function() {
+            in4.style.color = 'black';
+        };
+        
+        out4.onmouseout = function() {
+            in4.style.color = 'white';
+        };
+    </script>
     <title>Test</title>
+    <!-- CSS incorporated into HTML -->
+    <!-- Mostly setting up the hidden text as white and a few miscellaneous adjustments -->
     <style>
         .cells {
             border-left: 0.25vh solid black;
             text-align: center;
         }
-        
+
         .checkmark {
             height: 5vh;
             width: 5vh;
         }
-        
+
+        #hidden1 {
+            color: white;
+        }
+
+        #hidden2 {
+            color: white;
+        }
+
+        #hidden3 {
+            color: white;
+        }
+
+        #hidden4 {
+            color: white;
+        }
+
         .plus {
             position: absolute;
             width: 17vh;
             height: 4.5vh;
-            line-height: 0%;
+            line-height: 0;
             text-align: center;
             font-family: Arial;
-            font-size: medium;
+            font-size: large;
             background-color: #fdc20b;
             border-radius: 1.5vh;
         }
@@ -34,11 +96,15 @@
     </style>
 </head>
 <body>
+    <!-- This div contains the 3 icons in the top right corner of the page, the Print and Mail To (ac6@ac6.fr) work fine, the Share button is empty for now -->
     <div style="text-align: right;">
-        <img style="width: 7vh; height: 7vh;" src="img/PDF.png" alt=""/>
-        <img style="width: 7vh; height: 7vh;" src="img/share.png" alt=""/>
-        <img style="width: 7vh; height: 7vh;" src="img/mail.png" alt=""/>
+        <img onclick="window.print()" style="width: 7vh; height: 7vh; cursor: pointer;" src="img/PDF.png" alt=""/>
+        <img style="width: 7vh; height: 7vh; cursor: pointer;" src="img/share.png" alt=""/>
+        <img onclick="location.href='mailto:ac6@ac6.fr';" style="width: 7vh; height: 7vh; cursor: pointer;" src="img/mail.png" alt=""/>
     </div>
+    <!-- This table displays a giant SW4L logo, as well as text describing the tool itself, and a button that currently redirects home -->
+    <!-- Below the descriptive text are 4 keywords that when passed upon with a mouse reveal additionnal text promoting different aspects of SW4L -->
+    <!-- Those texts are currently placeholders -->
     <table style="display: inline-block; width: 70%;">
         <tr>
             <td colspan="4">
@@ -62,34 +128,61 @@
                 </p>
             </td>
             <td>
-                <div class="plus">
-                    <p style="color: white;"><b>voir plus</b></p>
-                </div>
+                <a href="home.html">
+                    <div class="plus">
+                        <p style="color: white;"><b>voir plus</b></p>
+                    </div>
+                </a>
             </td>
         </tr>
         <tr>
             <td style="text-align: center;">
-                <p style="font-size: large;">
+                <p style="font-size: large;" id="reveal1">
                     <b>Intuitif</b>
                 </p>
             </td>
             <td style="text-align: center;">
-                <p style="font-size: large;">
+                <p style="font-size: large;" id="reveal2">
                     <b>Simple d'utilisation</b>
                 </p>
             </td>
             <td style="text-align: center;">
-                <p style="font-size: large;">
+                <p style="font-size: large;" id="reveal3">
                     <b>Fléxible</b>
                 </p>
             </td>
             <td style="text-align: center;">
-                <p style="font-size: large;">
+                <p style="font-size: large;" id="reveal4">
                     <b>Collaboratif</b>
                 </p>
             </td>
         </tr>
+        <tr>
+            <td>
+                <p id="hidden1">
+                    [sample] Ac6-Tools vous propose un outil complet, prêt à l'emploi et adaptable, pour vous aider dans la construction de votre système Linux embarqué, depuis la définition jusqu'à la génération de l'image en passant par le développement de l'applicatif et le débogage.
+                </p>
+            </td>
+            <td>
+                <p id="hidden2">
+                    [sample] Ac6-Tools vous propose un outil complet, prêt à l'emploi et adaptable, pour vous aider dans la construction de votre système Linux embarqué, depuis la définition jusqu'à la génération de l'image en passant par le développement de l'applicatif et le débogage.
+                </p>
+            </td>
+            <td>
+                <p id="hidden3">
+                    [sample] Ac6-Tools vous propose un outil complet, prêt à l'emploi et adaptable, pour vous aider dans la construction de votre système Linux embarqué, depuis la définition jusqu'à la génération de l'image en passant par le développement de l'applicatif et le débogage.
+                </p>
+            </td>
+            <td>
+                <p id="hidden4">
+                    [sample] Ac6-Tools vous propose un outil complet, prêt à l'emploi et adaptable, pour vous aider dans la construction de votre système Linux embarqué, depuis la définition jusqu'à la génération de l'image en passant par le développement de l'applicatif et le débogage.
+                </p>
+            </td>
+        </tr>
     </table>
+    <!-- This table is a comparison of the features present within Yocto and System Workbench -->
+    <!-- A simple table with checkmark images corresponding to sentences, all setup in alternating colors -->
+    <!-- The checkmarks' size may need a small reduction -->
     <table style="float: right; border-collapse: collapse;">
         <tr>
             <td colspan="3" style="text-align: center;">
